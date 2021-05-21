@@ -1,6 +1,4 @@
-package com.company.Personas;
-
-import java.util.Scanner;
+package com.company.Personal;
 
 public class Recepcionista extends Persona{
 
@@ -14,7 +12,7 @@ public class Recepcionista extends Persona{
 
     public  String obtenerFeedback()
     {
-        return "rr";
+        return "";
     }
     public double getSueldo() {
         return sueldo;
