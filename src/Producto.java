@@ -33,4 +33,15 @@ public class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    //--------------- Metodos ---------------
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "stock=" + stock +
+                ", nombre='" + nombre + '\'' +
+                ", precio=" + precio +
+                '}';
+    }
 }
