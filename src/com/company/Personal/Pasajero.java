@@ -20,9 +20,41 @@ public class Pasajero extends Persona{
     }
 
 
-
-    public void solicitarReenbolsoReservapresencial(Reserva reserva)
+//en el caso de que el pasajerpo se quiera ir antes de tiempo puede solicitar la devolucion del valor
+// de sus dias restantes
+    //por ejemplo si paga 600 y se queda 5 dias
+    //600:5=120
+    //si se va en el dia 3 le devolvemos 240(dia 4 y 5)
+    public void solicitarReenbolsoReserva(Reserva reserva)
     {
+        //para calcular en el dia en el que estamos restarle al check in la fecha actual
+        //check in=20 de diciembre    actual 22 de diciembre
+        //y el periodo es 5
+        //22-20=2     |5-2=3 es decir estamos en el dia 3
 
+    }
+    public void solicitarUnProducto(String nombreProducto,List<Producto>producto)
+    {
+        for (Producto productoActual: producto) {
+            if(productoActual.nombre=nombreProducto)
+            {
+                if(productoActual.stock>0)
+                {
+                    //aca se pondria que se consumio el producto
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Pasajero{" +
+                "cantidadDeDinero=" + cantidadDeDinero +
+                ", paisDeOrigen='" + paisDeOrigen + '\'' +
+                ", domicilio='" + domicilio + '\'' +
+                ", metodoDePago='" + metodoDePago + '\'' +
+                ", historialEnElHotel=" + historialEnElHotel +
+                '}';
     }
 }
