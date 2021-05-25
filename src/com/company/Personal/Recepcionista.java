@@ -1,6 +1,5 @@
 package com.company.Personal;
 
-import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -33,11 +32,13 @@ public class Recepcionista extends Persona{
 
     }
 
-    public void CrearNuevaReserva(UUID id, Habitacion habitacion, Pasajero pasajero, int cantidadDiasHospedaje,
-                                  LocalDate checkIn,LocalDate checkOut)
+    public Reserva CrearNuevaReserva(UUID id, Habitacion habitacion, Pasajero pasajero, int cantidadDiasHospedaje,
+                                  LocalDateTime checkIn,LocalDateTime checkOut)
     {
 
-        LocalDate checkIn_=CheckIn(checkIn);
+
+        LocalDateTime checkIn_=CheckIn(checkIn);
+        LocalDateTime checkOut_=CheckOut(checkOut);
 
     }
 
@@ -57,6 +58,8 @@ public class Recepcionista extends Persona{
             System.out.println("Lo siento usted no puede hacer el check in en este momento");
             System.out.println("vuelva a las 10");
         }
+
+        return null;
     }
 
 
@@ -76,6 +79,8 @@ public class Recepcionista extends Persona{
             System.out.println("Lo siento usted no puede hacer el check out en este momento");
             System.out.println("vuelva a las 12");
         }
+
+        return null;
     }
     public void modificarReserva(Reserva reserva)
     {
