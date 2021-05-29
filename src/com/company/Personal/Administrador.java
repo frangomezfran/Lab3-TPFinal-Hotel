@@ -1,5 +1,7 @@
 package com.company.Personal;
 
+import com.company.Habitacion;
+
 public class Administrador extends Recepcionista{
 
     public Administrador(String nombre, String apellido,double sueldo,String turno, long dni) {

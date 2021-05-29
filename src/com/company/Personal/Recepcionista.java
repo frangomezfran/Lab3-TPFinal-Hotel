@@ -1,6 +1,9 @@
 package com.company.Personal;
 
-import javax.swing.text.DateFormatter;
+import com.company.Habitacion;
+import com.company.Reserva;
+import com.company.Hotel;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -33,12 +36,14 @@ public class Recepcionista extends Persona{
 
     }
 
-    public void CrearNuevaReserva(UUID id, Habitacion habitacion, Pasajero pasajero, int cantidadDiasHospedaje,
-                                  LocalDate checkIn,LocalDate checkOut)
+    public Reserva CrearNuevaReserva(UUID id, Habitacion habitacion, Pasajero pasajero, int cantidadDiasHospedaje,
+                                  LocalDateTime checkIn, LocalDateTime checkOut)
     {
 
-        LocalDate checkIn_=CheckIn(checkIn);
+        LocalDateTime checkIn_=CheckIn(checkIn);
+        LocalDateTime checkOut_=CheckOut(checkOut);
 
+        return new Reserva(id,pasajero,habitacion,cantidadDiasHospedaje,checkIn_,checkOut_);
     }
 
     public LocalDateTime CheckIn(LocalDateTime checkIn)
@@ -57,6 +62,8 @@ public class Recepcionista extends Persona{
             System.out.println("Lo siento usted no puede hacer el check in en este momento");
             System.out.println("vuelva a las 10");
         }
+
+        return null;
     }
 
 
@@ -76,13 +83,15 @@ public class Recepcionista extends Persona{
             System.out.println("Lo siento usted no puede hacer el check out en este momento");
             System.out.println("vuelva a las 12");
         }
+
+        return null;
     }
     public void modificarReserva(Reserva reserva)
     {
 
     }
 
-    public void consultarHabitacionesDisponibles(Hotel hotel,char Letra, int piso)
+    public void consultarHabitacionesDisponibles(Hotel hotel, char Letra, int piso)
     {
 
     }
@@ -92,7 +101,7 @@ public class Recepcionista extends Persona{
     }
     public void mostrarTodosLosUsuarios(Hotel listaDeUsuarios)
     {
-        for (Object pasajero:listaDeUsuarios) {
+        for (Object pasajero:listaDeUsuarios.listaPasajeros) {
             if(pasajero instanceof Pasajero)
             {
                 Pasajero pasajeroAmostrar= (Pasajero) pasajero;

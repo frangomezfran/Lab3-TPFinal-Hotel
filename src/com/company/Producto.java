@@ -1,3 +1,5 @@
+package com.company;
+
 public class Producto {
     private int stock;
     private String nombre;
@@ -36,12 +38,4 @@ public class Producto {
 
     //--------------- Metodos ---------------
 
-    @Override
-    public String toString() {
-        return "Producto{" +
-                "stock=" + stock +
-                ", nombre='" + nombre + '\'' +
-                ", precio=" + precio +
-                '}';
-    }
 }

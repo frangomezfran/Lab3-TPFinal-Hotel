@@ -1,9 +1,14 @@
+package com.company;
+import com.company.Personal.Pasajero;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.UUID;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Reserva {
 
-    private static int id = 0; //Podria llegar a generar problemas, pero tengo un registro de el orden de las reservas
+    private  int id = 0; //Podria llegar a generar problemas, pero tengo un registro de el orden de las reservas
     private Habitacion habitacion;
     private Pasajero pasajero;
     private ArrayList<Producto> productosConsumidos =  new ArrayList<>();
@@ -63,20 +68,20 @@ public class Reserva {
 
     public int getCantDiasReserva(){
 
-       int cantDiasReserva = 0;
-       LocalDateTime aux = this.checkOut;
+        int cantDiasReserva = 0;
+        LocalDateTime aux = this.checkOut;
 
-       while(aux.getDayOfYear() != checkIn.getDayOfYear()){
-           cantDiasReserva++;
-           aux.minusDays(1);
-       }
+        while(aux.getDayOfYear() != checkIn.getDayOfYear()){
+            cantDiasReserva++;
+            aux.minusDays(1);
+        }
 
-       return cantDiasReserva;
+        return cantDiasReserva;
     }
 
     public String muestraListaProductos(){
 
-        String listaProductosConsumidos = " Productos Consumidos por "+persona.getNombre()+" en la habitacion Piso: "+habitacion.getPiso()+" Letra: "+habitacion.getLetra()+": \n";
+        String listaProductosConsumidos = " Productos Consumidos por "+pasajero.getNombre()+" en la habitacion Piso: "+habitacion.getPiso()+" Letra: "+habitacion.getLetra()+": \n";
 
         for (Producto aux : this.productosConsumidos){
 

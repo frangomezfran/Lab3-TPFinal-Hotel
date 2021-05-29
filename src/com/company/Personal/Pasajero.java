@@ -1,26 +1,34 @@
 package com.company.Personal;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.company.Producto;
+import com.company.Reserva;
+
 
 public class Pasajero extends Persona{
     private double cantidadDeDinero;
-
-
     private String paisDeOrigen;
     private String domicilio;
-    private String metodoDePago="efectivo";
+
+
+    public MedioDePago formaDePago=MedioDePago.DEBITO;
     private List<Reserva> historialEnElHotel=new ArrayList<>();
 
     public Pasajero(String nombre, String apellido, long dni, double cantidadDeDinero,
-                    String paisDeOrigen, String domicilio) {
+                    String paisDeOrigen, String domicilio,String comoPague) {
         super(nombre, apellido, dni);
         this.cantidadDeDinero = cantidadDeDinero;
         this.paisDeOrigen = paisDeOrigen;
         this.domicilio = domicilio;
+
     }
 
 
-//en el caso de que el pasajerpo se quiera ir antes de tiempo puede solicitar la devolucion del valor
+
+
+    //en el caso de que el pasajerpo se quiera ir antes de tiempo puede solicitar la devolucion del valor
 // de sus dias restantes
     //por ejemplo si paga 600 y se queda 5 dias
     //600:5=120
@@ -36,9 +44,9 @@ public class Pasajero extends Persona{
     public void solicitarUnProducto(String nombreProducto,List<Producto>producto)
     {
         for (Producto productoActual: producto) {
-            if(productoActual.nombre=nombreProducto)
+            if(productoActual.getNombre()==nombreProducto)
             {
-                if(productoActual.stock>0)
+                if(productoActual.getStock()>0)
                 {
                     //aca se pondria que se consumio el producto
                 }
@@ -53,7 +61,7 @@ public class Pasajero extends Persona{
                 "cantidadDeDinero=" + cantidadDeDinero +
                 ", paisDeOrigen='" + paisDeOrigen + '\'' +
                 ", domicilio='" + domicilio + '\'' +
-                ", metodoDePago='" + metodoDePago + '\'' +
+                ", formaDePago='" + formaDePago + '\'' +
                 ", historialEnElHotel=" + historialEnElHotel +
                 '}';
     }
