@@ -1,6 +1,4 @@
-package com.company.Personal;
-
-public class Administrador extends Recepcionista{
+public class Administrador extends Recepcionista {
 
     public Administrador(String nombre, String apellido,double sueldo,String turno, long dni) {
         super(nombre, apellido, dni,sueldo,turno);

@@ -1,15 +1,13 @@
-package com.company.Personal;
-
-import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.UUID;
 
-public class Recepcionista extends Persona{
+public class Recepcionista extends Persona {
 
     private double sueldo;
     private String turno;
+
     public Recepcionista(String nombre, String apellido, long dni,double sueldo,String turno) {
         super(nombre, apellido, dni);
         this.sueldo=sueldo;
@@ -34,7 +32,7 @@ public class Recepcionista extends Persona{
     }
 
     public void CrearNuevaReserva(UUID id, Habitacion habitacion, Pasajero pasajero, int cantidadDiasHospedaje,
-                                  LocalDate checkIn,LocalDate checkOut)
+                                  LocalDate checkIn, LocalDate checkOut)
     {
 
         LocalDate checkIn_=CheckIn(checkIn);
@@ -112,7 +110,7 @@ public class Recepcionista extends Persona{
         }
         return false;
     }
-    public void login(Pasajero pasajero,Hotel hotel)
+    public void login(Pasajero pasajero, Hotel hotel)
     {
         //si el dni del pasajero se encuentra en la lista de usuarios ingresa sesion de forma correcta
 

@@ -76,7 +76,7 @@ public class Reserva {
 
     public String muestraListaProductos(){
 
-        String listaProductosConsumidos = " Productos Consumidos por "+persona.getNombre()+" en la habitacion Piso: "+habitacion.getPiso()+" Letra: "+habitacion.getLetra()+": \n";
+        String listaProductosConsumidos = " Productos Consumidos por "+pasajero.getNombre()+" en la habitacion Piso: "+habitacion.getPiso()+" Letra: "+habitacion.getLetra()+": \n";
 
         for (Producto aux : this.productosConsumidos){
 
