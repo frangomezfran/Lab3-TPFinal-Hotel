@@ -2,7 +2,9 @@ package com.company.Personal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+import com.company.Hotel;
 import com.company.Producto;
 import com.company.Reserva;
 
@@ -11,9 +13,7 @@ public class Pasajero extends Persona{
     private double cantidadDeDinero;
     private String paisDeOrigen;
     private String domicilio;
-
-
-    public MedioDePago formaDePago=MedioDePago.DEBITO;
+    public MedioDePago formaDePago;
     private List<Reserva> historialEnElHotel=new ArrayList<>();
 
     public Pasajero(String nombre, String apellido, long dni, double cantidadDeDinero,
@@ -55,6 +55,22 @@ public class Pasajero extends Persona{
         }
     }
 
+    public  String obtenerFeedback()
+    {
+        System.out.println("si usted desea dejenos su opinion acerca de como se sintio en nuestro establecimiento");
+        Scanner quieroOpinar=new Scanner(System.in);
+        System.out.println("¿Desea opinar?--->si/no");
+
+        if(quieroOpinar.nextLine()=="si")
+        {
+            Scanner opinion=new Scanner(System.in);
+            return opinion.nextLine();
+        }else
+        {
+            return null;
+        }
+
+    }
     @Override
     public String toString() {
         return "Pasajero{" +

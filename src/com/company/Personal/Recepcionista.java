@@ -19,22 +19,7 @@ public class Recepcionista extends Persona{
         this.turno=turno;
     }
 
-    public  String obtenerFeedback()
-    {
-        System.out.println("si usted desea dejenos su opinion acerca de como se sintio en nuestro establecimiento");
-        Scanner quieroOpinar=new Scanner(System.in);
-        System.out.println("¿Desea opinar?--->si/no");
 
-        if(quieroOpinar.nextLine()=="si")
-        {
-            Scanner opinion=new Scanner(System.in);
-            return opinion.nextLine();
-        }else
-        {
-            return null;
-        }
-
-    }
 
     public Reserva CrearNuevaReserva(UUID id, Habitacion habitacion, Pasajero pasajero, int cantidadDiasHospedaje,
                                   LocalDateTime checkIn, LocalDateTime checkOut)
@@ -43,7 +28,7 @@ public class Recepcionista extends Persona{
         LocalDateTime checkIn_=CheckIn(checkIn);
         LocalDateTime checkOut_=CheckOut(checkOut);
 
-        return new Reserva(id,pasajero,habitacion,cantidadDiasHospedaje,checkIn_,checkOut_);
+        return new Reserva(pasajero,habitacion,cantidadDiasHospedaje);
     }
 
     public LocalDateTime CheckIn(LocalDateTime checkIn)
@@ -99,7 +84,9 @@ public class Recepcionista extends Persona{
     {
 
     }
-    public void mostrarTodosLosUsuarios(Hotel listaDeUsuarios)
+
+   /*
+   *     public void mostrarTodosLosUsuarios(Hotel listaDeUsuarios)
     {
         for (Object pasajero:listaDeUsuarios.listaPasajeros) {
             if(pasajero instanceof Pasajero)
@@ -109,6 +96,8 @@ public class Recepcionista extends Persona{
             }
         }
     }
+   * */
+
     public void modificarUsuario(Pasajero pasajero)
     {
        //aca usar getter y setter

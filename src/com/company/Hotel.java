@@ -14,12 +14,21 @@ public class Hotel {
     private ArrayList<Pasajero> listaPasajeros = new ArrayList<>();
     private ArrayList<Reserva> listaReservas = new ArrayList<>();
     private ArrayList<Recepcionista> listaEmpleados = new ArrayList<>();
+    private ArrayList<String> reseñasPasajeros = new ArrayList<>();
 
     public Hotel(String nombreHotel, String direccion, int categoria, int cantidadEmpleados) {
         this.nombreHotel = nombreHotel;
         this.direccion = direccion;
         this.categoria = categoria;
         this.cantidadEmpleados = cantidadEmpleados;
+    }
+
+    public ArrayList<String> getReseñasPasajeros() {
+        return reseñasPasajeros;
+    }
+
+    public void setReseñasPasajeros(ArrayList<String> reseñasPasajeros) {
+        this.reseñasPasajeros = reseñasPasajeros;
     }
 /*
 *

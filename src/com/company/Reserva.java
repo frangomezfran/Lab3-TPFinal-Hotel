@@ -1,14 +1,13 @@
 package com.company;
+
 import com.company.Personal.Pasajero;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.UUID;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Reserva {
 
-    private  int id = 0; //Podria llegar a generar problemas, pero tengo un registro de el orden de las reservas
+    private String id; //Podria llegar a generar problemas, pero tengo un registro de el orden de las reservas
     private Habitacion habitacion;
     private Pasajero pasajero;
     private ArrayList<Producto> productosConsumidos =  new ArrayList<>();
@@ -17,20 +16,14 @@ public class Reserva {
 
     //--------------- Constructor ---------------
     public Reserva(Pasajero pasajero, Habitacion habitacion, int cantDiasReserva) {
-        this.id ++;
         this.pasajero = pasajero;
         this.habitacion = habitacion;
         this.checkIn = LocalDateTime.now(); // Reserva se instanciara solo entre las 14:00 y las 00:00, los horarios del checkin
         this.checkOut= checkIn.plusDays(cantDiasReserva);
+        this.id = this.creaID();
+
     }
 
-    //--------------- ID ---------------
-    public static int getId() {
-        return id;
-    }
-    public static void setId(int id) {
-        Reserva.id = id;
-    }
 
     //--------------- Habitacion ---------------
     public Habitacion getHabitacion() {
@@ -123,6 +116,12 @@ public class Reserva {
         //correcto, si no es asi creo q podria sumarle un dia mas de alquiler
         //al pasajero
         return this.getMontoTotalProductos() + this.getMontoTotalHabitacion();
+    }
+
+    private String creaID(){
+
+        return pasajero.getDni() + "-" + this.getHabitacion().getLetra()+this.getHabitacion().getPiso() +"-" +this.getCheckIn();
+
     }
 
 }
