@@ -1,3 +1,8 @@
+package com.company.Personal;
+
+import com.company.Personal.Pasajero;
+import com.company.Personal.Persona;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -80,7 +85,7 @@ public class Recepcionista extends Persona {
 
     }
 
-    public void consultarHabitacionesDisponibles(Hotel hotel,char Letra, int piso)
+    public void consultarHabitacionesDisponibles(Hotel hotel, char Letra, int piso)
     {
 
     }
@@ -102,7 +107,7 @@ public class Recepcionista extends Persona {
     {
        //aca usar getter y setter
     }
-    public boolean buscarUsuario(long dni,Hotel hotel)
+    public boolean buscarUsuario(long dni, Hotel hotel)
     {
         if(true)  //si el dni del pasajero se encuentra en la lista de usuarios
         {

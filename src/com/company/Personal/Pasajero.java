@@ -1,3 +1,5 @@
+package com.company.Personal;
+
 import java.util.ArrayList;
 
 public class Pasajero extends Persona {
@@ -47,7 +49,7 @@ public class Pasajero extends Persona {
 
     @Override
     public String toString() {
-        return "Pasajero{" +
+        return "com.company.Personal.Pasajero{" +
                 "cantidadDeDinero=" + cantidadDeDinero +
                 ", paisDeOrigen='" + paisDeOrigen + '\'' +
                 ", domicilio='" + domicilio + '\'' +

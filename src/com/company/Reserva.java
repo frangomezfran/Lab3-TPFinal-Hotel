@@ -1,3 +1,5 @@
+import com.company.Personal.Pasajero;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -44,7 +46,7 @@ public class Reserva {
         this.productosConsumidos = productosConsumidos;
     }
 
-    //--------------- Pasajero ---------------
+    //--------------- com.company.Personal.Pasajero ---------------
     public Pasajero getPasajero() {
         return pasajero;
     }

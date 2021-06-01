@@ -1,3 +1,6 @@
+import com.company.Personal.Pasajero;
+import com.company.Personal.Recepcionista;
+
 import java.util.ArrayList;
 
 public class Hotel {
@@ -18,7 +21,7 @@ public class Hotel {
     }
 
     public boolean buscarReservaPasajero(Pasajero pasajero){
-        for(Pasajero auxPasajero: this.listaPasajeros){ //La idea es comparar el pasajero de la lista de pasajeros  con los pasajeros de lista de reservas 
+        for(Pasajero auxPasajero: this.listaPasajeros){ //La idea es comparar el pasajero de la lista de pasajeros  con los pasajeros de lista de reservas
             if(auxPasajero.getDni()==(pasajero.getDni()));// getNombrePasajero es temporal hasta saber el metodo de obtener pasajero en reserva.
             return true;
         }
