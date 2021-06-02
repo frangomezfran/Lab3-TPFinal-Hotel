@@ -4,6 +4,7 @@ public class Producto {
     private int stock;
     private String nombre;
     private double precio;
+    private int cantidadAsolicitar;
 
     //--------------- Constructor ---------------
     public Producto(int stock, String nombre, double precio) {
@@ -29,11 +30,20 @@ public class Producto {
     }
 
     //--------------- Precio ---------------
+    //devuelvo el precio del producto por la cantidad de veces que se solicito
     public double getPrecio() {
-        return precio;
+        return precio*cantidadAsolicitar;
     }
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public int getCantidadAsolicitar() {
+        return cantidadAsolicitar;
+    }
+
+    public void setCantidadAsolicitar(int cantidadAsolicitar) {
+        this.cantidadAsolicitar = cantidadAsolicitar;
     }
 
     //--------------- Metodos ---------------

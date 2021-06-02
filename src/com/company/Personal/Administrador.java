@@ -16,12 +16,12 @@ public class Administrador extends Recepcionista{
     public Recepcionista crearUnNuevoResepcionista(String nombre,String apellido,long dni,int sueldo,String turno)
     {
         Recepcionista nuevoRecepcionista;
-        return nuevoRecepcionista =new Recepcionista(nombre,apellido,dni,sueldo,turno);
+        return new Recepcionista(nombre,apellido,dni,sueldo,turno);
     }
     public Administrador crearUnNuevoAdministrador(String nombre,String apellido,long dni,int sueldo,String turno)
     {
         Administrador nuevoAdministrador;
-        return nuevoAdministrador =new Administrador(nombre,apellido,sueldo,turno,dni);
+        return new Administrador(nombre,apellido,sueldo,turno,dni);
     }
 
     @Override

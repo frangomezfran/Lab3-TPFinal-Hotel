@@ -30,6 +30,14 @@ public class Hotel {
     public void setReseñasPasajeros(ArrayList<String> reseñasPasajeros) {
         this.reseñasPasajeros = reseñasPasajeros;
     }
+
+    public ArrayList<Pasajero> getListaPasajeros() {
+        return listaPasajeros;
+    }
+
+    public void setListaPasajeros(ArrayList<Pasajero> listaPasajeros) {
+        this.listaPasajeros = listaPasajeros;
+    }
 /*
 *
 *   public boolean buscarReservaPasajero(Pasajero pasajero){
