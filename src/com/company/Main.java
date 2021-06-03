@@ -12,16 +12,16 @@ public class Main {
 
         hotel.aniadirListaEmpleados(administrador);
 
-        administrador.crearUnNuevoResepcionista("xsss","dlskd",
-                2323,223,"qsyo");
+        administrador.crearUnNuevoResepcionista("pepe","dolores",
+                23323,2223,"maniana");
 
-        administrador.crearUnNuevoResepcionista("xs3s","dlskd",
-                2323,223,"qsyo");
+        administrador.crearUnNuevoResepcionista("roman","riquelme",
+                12323,2230,"maniana");
 
-        administrador.crearUnNuevoAdministrador("Ys3s","dlskd",
-                2323,223,"qsyo");
-        administrador.crearUnNuevoAdministrador("AAAYs3s","dlskd",
-                2323,223,"qsyo");
+        administrador.crearUnNuevoAdministrador("peke","rugeri",
+                55323,2023,"tarde");
+        administrador.crearUnNuevoAdministrador("goro","kombat",
+                66323,2203,"noche");
 
 
         System.out.println(hotel.toString());
