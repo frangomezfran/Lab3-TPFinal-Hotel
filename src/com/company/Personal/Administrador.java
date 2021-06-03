@@ -1,6 +1,7 @@
 package com.company.Personal;
 
 import com.company.Habitacion;
+import com.company.Hotel;
 
 public class Administrador extends Recepcionista{
 
@@ -13,15 +14,16 @@ public class Administrador extends Recepcionista{
     {
 
     }
-    public Recepcionista crearUnNuevoResepcionista(String nombre,String apellido,long dni,int sueldo,String turno)
+    public void crearUnNuevoResepcionista(String nombre,String apellido,long dni,int sueldo,String turno)
     {
-        Recepcionista nuevoRecepcionista;
-        return new Recepcionista(nombre,apellido,dni,sueldo,turno);
+        Hotel.cantidadEmpleados++;
+        Hotel.listaEmpleados.add(new Recepcionista(nombre,apellido,dni,sueldo,turno));
     }
-    public Administrador crearUnNuevoAdministrador(String nombre,String apellido,long dni,int sueldo,String turno)
+    public void crearUnNuevoAdministrador(String nombre,String apellido,long dni,int sueldo,String turno)
     {
-        Administrador nuevoAdministrador;
-        return new Administrador(nombre,apellido,sueldo,turno,dni);
+        Hotel.cantidadEmpleados++;
+        Hotel.listaEmpleados.add(new Administrador(nombre,apellido,sueldo,turno,dni));
+
     }
 
     @Override

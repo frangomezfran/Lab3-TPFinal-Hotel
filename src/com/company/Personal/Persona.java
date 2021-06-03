@@ -33,4 +33,6 @@ public abstract class Persona {
     public void setDni(long dni) {
         this.dni = dni;
     }
+
+
 }

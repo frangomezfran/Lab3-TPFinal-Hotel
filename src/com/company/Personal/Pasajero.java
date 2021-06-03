@@ -95,4 +95,6 @@ public class Pasajero extends Persona{
                 ", historialEnElHotel=" + historialEnElHotel +
                 '}';
     }
+
+
 }

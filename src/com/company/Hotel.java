@@ -8,36 +8,61 @@ import java.util.ArrayList;
 public class Hotel {
     private String nombreHotel;
     private String direccion;
-    private int categoria;
-    private int cantidadEmpleados;
+    private int categoria;//1 2 3 4 5 estrellas
+    public static int cantidadEmpleados;
     private ArrayList<Habitacion> listaHabitaciones = new ArrayList<>();
     private ArrayList<Pasajero> listaPasajeros = new ArrayList<>();
     private ArrayList<Reserva> listaReservas = new ArrayList<>();
-    private ArrayList<Recepcionista> listaEmpleados = new ArrayList<>();
-    private ArrayList<String> reseñasPasajeros = new ArrayList<>();
+    public static ArrayList<Recepcionista> listaEmpleados = new ArrayList<>();
+    private ArrayList<String> reseniasPasajeros = new ArrayList<>();
 
-    public Hotel(String nombreHotel, String direccion, int categoria, int cantidadEmpleados) {
+    public Hotel(String nombreHotel, String direccion, int categoria) {
         this.nombreHotel = nombreHotel;
         this.direccion = direccion;
         this.categoria = categoria;
-        this.cantidadEmpleados = cantidadEmpleados;
+
     }
 
-    public ArrayList<String> getReseñasPasajeros() {
-        return reseñasPasajeros;
+    public ArrayList<String> getReseniasPasajeros() {
+        return reseniasPasajeros;
     }
 
-    public void setReseñasPasajeros(ArrayList<String> reseñasPasajeros) {
-        this.reseñasPasajeros = reseñasPasajeros;
+    public void aniadirElementoResenias(String resenia) {
+        this.reseniasPasajeros.add(resenia);
     }
 
     public ArrayList<Pasajero> getListaPasajeros() {
         return listaPasajeros;
     }
 
-    public void setListaPasajeros(ArrayList<Pasajero> listaPasajeros) {
-        this.listaPasajeros = listaPasajeros;
+    public void aniadirElementoPasajero(Pasajero pasajero) {
+        this.listaPasajeros.add(pasajero);
     }
+
+    public ArrayList<Habitacion> getListaHabitaciones() {
+        return listaHabitaciones;
+    }
+
+    public void aniadirElementoHabitacion(Habitacion habitacion) {
+        this.listaHabitaciones.add(habitacion);
+    }
+
+
+    public ArrayList<Reserva> getListaReservas() {
+        return listaReservas;
+    }
+
+    public void aniadirListaReservas(Reserva reserva) {
+        this.listaReservas.add(reserva);
+    }
+
+    public ArrayList<Recepcionista> getListaEmpleados() {
+        return listaEmpleados;
+    }
+    public void aniadirListaEmpleados(Recepcionista empleado) {
+        this.listaEmpleados.add(empleado);
+    }
+
 /*
 *
 *   public boolean buscarReservaPasajero(Pasajero pasajero){
@@ -51,4 +76,18 @@ public class Hotel {
 *
 * */
 
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "nombreHotel='" + nombreHotel + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", cantidad de empleados=" + cantidadEmpleados +
+                ", listaHabitaciones=" + listaHabitaciones +
+                ", listaPasajeros=" + listaPasajeros +
+                ", listaReservas=" + listaReservas +
+                ", listaEmpleados=" + listaEmpleados +
+                ", reseniasPasajeros=" + reseniasPasajeros +
+                '}';
+    }
 }

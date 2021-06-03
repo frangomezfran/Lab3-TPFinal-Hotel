@@ -88,7 +88,8 @@ public class Habitacion {
         this.tipoHabitacion.put("doblete",10500);
         this.tipoHabitacion.put("estudio",22500);
 
-
+        //con este condicional establecemos el precio de la
+        // habitacion segun el tipo de la misma
         if(tipoHabitacion.containsKey(TipoHabitacion_))//si la key esta en el hashTable
         {
             //establezco el precio segun que tipo de habitacion que sea

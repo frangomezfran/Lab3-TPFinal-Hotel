@@ -11,6 +11,7 @@ public class Recepcionista extends Persona{
 
     private double sueldo;
     private String turno;
+
     public Recepcionista(String nombre, String apellido, long dni,double sueldo,String turno) {
         super(nombre, apellido, dni);
         this.sueldo=sueldo;
@@ -142,7 +143,8 @@ public class Recepcionista extends Persona{
     }
     public void login(Pasajero pasajero,Hotel hotel)
     {
-        //si el dni del pasajero se encuentra en la lista de usuarios ingresa sesion de forma correcta
+        //si el dni del pasajero se encuentra en la lista de
+        // usuarios ingresa sesion de forma correcta
         if(hotel.getListaPasajeros().contains(pasajero.getDni()))  //si el dni del pasajero se encuentra en la lista de usuarios
         {
             System.out.println("Inicio de sesion realizado correctamente :) ");
@@ -167,9 +169,16 @@ public class Recepcionista extends Persona{
 
     @Override
     public String toString() {
-        return "Empleado{" +
+
+
+        return  "Empleado{" +
+                "nombre='" + getNombre() + '\n' +
+                "apellido='" + getApellido() + '\n' +
+                "dni='" + getDni() + '\n' +
                 "sueldo=" + sueldo +
-                ", turno='" + turno + '\'' +
+                ", turno='" + turno + '\n' +
                 '}';
+
+
     }
 }
