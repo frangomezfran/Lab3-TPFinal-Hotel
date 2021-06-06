@@ -37,36 +37,75 @@ public class Pasajero extends Persona{
                 break;
             case EFECTIVO:
                 formaDePago=formaDePago.EFECTIVO;
-                System.out.println("el usuario utilizara efectivo como medio de pago");
-                System.out.println("valor actual cambio:100 pesos argentinos por dolar");
-                System.out.println("¿Que divisa usted tiene(peso argentino o dolar estadounidense)?");
-                Scanner divisa_=new Scanner(System.in);
-                if(divisa_.nextLine().equals("dolar estadounidense"))
-                {
-                    saldo=saldo*100;//paso los dolares a pesos argentinos
-                }
-                //no pongo otro else porque:como la otra moneda permitida es el peso argentino,
-                //no es necesario convertir la divisa
-                break;
+                System.out.println("el usuario utilizara efectivo como medio de pago\n");
+                System.out.println("valor actual cambio:100 pesos argentinos por dolar\n");
+                System.out.println("¿Que divisa usted tiene(peso argentino o " +
+                        "dolar estadounidense\n)?");
 
+                Scanner divisa_=new Scanner(System.in);
+                System.out.println("1-peso argentino \n" +
+                        "2-dolar estadounidense \n");
+
+
+                if(divisa_.nextInt()==1)
+                {
+                    System.out.println("\n**********************************\n");
+                    System.out.println("usted eligio el peso argentino como moneda \n");
+                    System.out.println("\n**********************************\n");
+
+                }
+                else {
+                    System.out.println("\n**********************************\n");
+                    System.out.println("usted eligio el dolar estadounidense como moneda \n");
+                    System.out.println("\n**********************************\n");
+                    this.saldo = saldo * 100;
+                }
+                break;
             default:System.out.println("\n-ERROR-\n por favor escriba alguna de " +
                     "las siguientes opciones: DEBITO CREDITO EFECTIVO");
         }
 
     }
 
-    public void solicitarUnProducto(String nombreProducto,List<Producto>producto)
-    {
+    public boolean solicitarUnProducto(String nombreProducto,List<Producto>producto,int cantidadAsolicitar)
+    {   boolean operacionExitosa=false;
         for (Producto productoActual: producto) {
             if(productoActual.getNombre()==nombreProducto)
             {
-                if(productoActual.getStock()>0)
+                if(productoActual.getStock()>cantidadAsolicitar)
                 {
-                    //aca se pondria que se consumio el producto
+                    productoActual.setStock(cantidadAsolicitar);
+                    operacionExitosa=true;
+                    return operacionExitosa;
+
+                }else
+                {
+                    //si no contamos con la cantidad solicitada le damos la opcion al pasajero de
+                    //elegir la cantidad disponible actualmente
+                    int cantidadEnStock=cantidadAsolicitar-productoActual.getStock();
+                    System.out.println("cantidad disponible actual--> "+(cantidadEnStock));
+                    System.out.println("si usted desea puede solicitar esta cantidad o seleccionar otro" +
+                            "producto sepa disculpar ");
+                    Scanner opcionElegida=new Scanner(System.in);
+                    System.out.println("\n1-continuar \n" +
+                            " 2-volver al menu\n");
+                    if(opcionElegida.nextInt()==1) {
+                        //le resto al stock la cantidad disponible
+                        productoActual.setStock(cantidadEnStock);
+                        operacionExitosa=true;
+                        return operacionExitosa;
+                    }
+                    else
+                    {
+                        break;//para parar de buscar
+                    }
+                    //si el empleado escribe un 2 automaticamente volvemos
+                    //al menu prinicipal
                 }
             }
 
         }
+        return operacionExitosa;//false
     }
 
     public  String obtenerFeedback()
@@ -79,16 +118,19 @@ public class Pasajero extends Persona{
         {
             Scanner opinion=new Scanner(System.in);
             return opinion.nextLine();
-        }else
-        {
-            return null;
         }
+
+        return null;
+
 
     }
     @Override
     public String toString() {
         return "Pasajero{" +
-                "saldo=" + saldo +
+                "nombre= " + this.getNombre() +
+                " apellido= " + this.getApellido() +
+                " dni= " + getDni() +
+                " saldo= " + saldo +
                 ", paisDeOrigen='" + paisDeOrigen + '\'' +
                 ", domicilio='" + domicilio + '\'' +
                 ", formaDePago='" + formaDePago + '\'' +

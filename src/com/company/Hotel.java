@@ -5,15 +5,16 @@ import com.company.Personal.Recepcionista;
 
 import java.util.ArrayList;
 
+//solo crear un solo archivo .json el cual contenga todas las listas
 public class Hotel {
     private String nombreHotel;
     private String direccion;
     private int categoria;//1 2 3 4 5 estrellas
-    public static int cantidadEmpleados;
+    public  int cantidadEmpleados;
     private ArrayList<Habitacion> listaHabitaciones = new ArrayList<>();
     private ArrayList<Pasajero> listaPasajeros = new ArrayList<>();
     private ArrayList<Reserva> listaReservas = new ArrayList<>();
-    public static ArrayList<Recepcionista> listaEmpleados = new ArrayList<>();
+    private ArrayList<Recepcionista> listaEmpleados = new ArrayList<>();
     private ArrayList<String> reseniasPasajeros = new ArrayList<>();
 
     public Hotel(String nombreHotel, String direccion, int categoria) {
@@ -23,6 +24,7 @@ public class Hotel {
 
     }
 
+    /***resenias pasajeros**/
     public ArrayList<String> getReseniasPasajeros() {
         return reseniasPasajeros;
     }
@@ -31,14 +33,16 @@ public class Hotel {
         this.reseniasPasajeros.add(resenia);
     }
 
-    public ArrayList<Pasajero> getListaPasajeros() {
-        return listaPasajeros;
+    /***lista pasajeros**/
+
+    public  ArrayList<Pasajero> getListaPasajeros() {
+        return this.listaPasajeros;
     }
 
-    public void aniadirElementoPasajero(Pasajero pasajero) {
-        this.listaPasajeros.add(pasajero);
+    public  void aniadirListaPasajeros(Pasajero pasajero) {
+        listaPasajeros.add(pasajero);
     }
-
+    /***habitaciones**/
     public ArrayList<Habitacion> getListaHabitaciones() {
         return listaHabitaciones;
     }
@@ -47,7 +51,7 @@ public class Hotel {
         this.listaHabitaciones.add(habitacion);
     }
 
-
+    /***reservas**/
     public ArrayList<Reserva> getListaReservas() {
         return listaReservas;
     }
@@ -55,7 +59,7 @@ public class Hotel {
     public void aniadirListaReservas(Reserva reserva) {
         this.listaReservas.add(reserva);
     }
-
+    /***empleados**/
     public ArrayList<Recepcionista> getListaEmpleados() {
         return listaEmpleados;
     }
@@ -63,19 +67,22 @@ public class Hotel {
         this.listaEmpleados.add(empleado);
     }
 
-/*
-*
-*   public boolean buscarReservaPasajero(Pasajero pasajero){
-        for(Pasajero auxPasajero: this.listaPasajeros){ //La idea es comparar el pasajero de la lista de pasajeros  con los pasajeros de lista de reservas
-            if(auxPasajero.getNombre().equals(this.listaReservas.get(auxPasajero).));// getNombrePasajero es temporal hasta saber el metodo de obtener pasajero en reserva.
-            return true;
-        }
-        return false;
+    /***funciones para crear nuevos recepcionistas y administradores**/
+    public void crearUnNuevoResepcionista(String nombre, String apellido, long dni,double sueldo,String turno)
+    {
+        this.cantidadEmpleados++;
+        aniadirListaEmpleados(new Recepcionista(nombre,apellido,dni,sueldo,turno));
     }
-*
-*
-* */
 
+    public void crearUnNuevoAdministrador(String nombre, String apellido,double sueldo,String turno, long dni)
+    {
+        this.cantidadEmpleados++;
+        aniadirListaEmpleados(new Recepcionista(nombre,apellido,dni,sueldo,turno));
+
+    }
+
+
+    /***esta funcion nos permite retornar un String con toda la informacion del hotel**/
     @Override
     public String toString() {
         return "Hotel{" +

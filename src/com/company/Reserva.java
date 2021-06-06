@@ -37,7 +37,7 @@ public class Reserva {
     public ArrayList<Producto> getProductosConsumidos() {
         return productosConsumidos;
     }
-    public void setProductosConsumidos(ArrayList<Producto> productosConsumidos) {
+    public void aniadirProductosConsumidos(ArrayList<Producto> productosConsumidos) {
         this.productosConsumidos = productosConsumidos;
     }
 

@@ -7,18 +7,19 @@ public class Producto {
     private int cantidadAsolicitar;
 
     //--------------- Constructor ---------------
-    public Producto(int stock, String nombre, double precio) {
+    public Producto(int stock, String nombre, double precio,int cantidadAsolicitar) {
         this.stock = stock;
         this.nombre = nombre;
         this.precio = precio;
+        this.cantidadAsolicitar = cantidadAsolicitar;
     }
 
     //--------------- Stock ---------------
     public int getStock() {
         return stock;
     }
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setStock(int cantidadRetirada) {
+        this.stock -=cantidadRetirada;
     }
 
     //--------------- Nombre ---------------

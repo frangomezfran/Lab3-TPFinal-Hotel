@@ -2,6 +2,8 @@ package com.company;
 
 import com.company.Personal.*;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -12,19 +14,39 @@ public class Main {
 
         hotel.aniadirListaEmpleados(administrador);
 
-        administrador.crearUnNuevoResepcionista("pepe","dolores",
+        hotel.crearUnNuevoResepcionista("pepe","dolores",
                 23323,2223,"maniana");
 
-        administrador.crearUnNuevoResepcionista("roman","riquelme",
-                12323,2230,"maniana");
+        hotel.crearUnNuevoResepcionista("el goma","ramarazo",
+                12323,2230,"tarde");
+        hotel.crearUnNuevoResepcionista("roman","riquelme",
+                12323,2230,"tarde");
 
-        administrador.crearUnNuevoAdministrador("peke","rugeri",
-                55323,2023,"tarde");
-        administrador.crearUnNuevoAdministrador("goro","kombat",
-                66323,2203,"noche");
+        hotel.crearUnNuevoResepcionista("romana","riquelmef",
+                1232223,2230,"noche");
+
+        hotel.crearUnNuevoAdministrador("peke","rugeri",
+                55323,"tarde",2023);
+        hotel.crearUnNuevoAdministrador("goro","kombat",
+                66323,"noche",2203);
 
 
         System.out.println(hotel.toString());
+
+
+
+
+        Pasajero pasajero1=new Pasajero("juan","riquelmito",262,
+                230,"AR","jara 2030","EFECTIVO");
+        System.out.println(pasajero1.toString());
+        Pasajero pasajero2=new Pasajero("juan","riquelmito",262,
+                230,"AR","jara 2030","EFECTIVO");
+        System.out.println(pasajero2.toString());
+        Pasajero pasajero3=new Pasajero("pedro","sanchez",88232,
+                230,"EEUU","55 Fruit St, Boston, MA 02114",
+                "EFECTIVO");
+
+        System.out.println(pasajero3.toString());
 
 
 

@@ -1,7 +1,8 @@
 package com.company.Personal;
 
 import com.company.Habitacion;
-import com.company.Hotel;
+
+
 
 public class Administrador extends Recepcionista{
 
@@ -10,21 +11,12 @@ public class Administrador extends Recepcionista{
 
     }
 
+    //con esta funcion se actualizara en el archivo json que habitaciones estan disponibles
     public void actualizarHabitacionesDisponibles(Habitacion habitacionNoDisponible)
     {
 
     }
-    public void crearUnNuevoResepcionista(String nombre,String apellido,long dni,int sueldo,String turno)
-    {
-        Hotel.cantidadEmpleados++;
-        Hotel.listaEmpleados.add(new Recepcionista(nombre,apellido,dni,sueldo,turno));
-    }
-    public void crearUnNuevoAdministrador(String nombre,String apellido,long dni,int sueldo,String turno)
-    {
-        Hotel.cantidadEmpleados++;
-        Hotel.listaEmpleados.add(new Administrador(nombre,apellido,sueldo,turno,dni));
 
-    }
 
     @Override
     public String toString() {
