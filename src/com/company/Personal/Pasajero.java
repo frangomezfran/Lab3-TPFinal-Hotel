@@ -2,14 +2,14 @@ package com.company.Personal;
 
 import java.util.ArrayList;
 
-public class Pasajero extends Persona{
+public class Pasajero extends Persona {
     private double cantidadDeDinero;
 
 
     private String paisDeOrigen;
     private String domicilio;
     private String metodoDePago="efectivo";
-    private List<Reserva> historialEnElHotel=new ArrayList<>();
+    private ArrayList<Reserva> historialEnElHotel=new ArrayList<>();
 
     public Pasajero(String nombre, String apellido, long dni, double cantidadDeDinero,
                     String paisDeOrigen, String domicilio) {
@@ -33,12 +33,12 @@ public class Pasajero extends Persona{
         //22-20=2     |5-2=3 es decir estamos en el dia 3
 
     }
-    public void solicitarUnProducto(String nombreProducto,List<Producto>producto)
+    public void solicitarUnProducto(String nombreProducto,ArrayList<Producto>producto)
     {
         for (Producto productoActual: producto) {
-            if(productoActual.nombre=nombreProducto)
+            if(productoActual.getNombre().equals(nombreProducto))
             {
-                if(productoActual.stock>0)
+                if(productoActual.getStock()>0)
                 {
                     //aca se pondria que se consumio el producto
                 }
@@ -49,7 +49,7 @@ public class Pasajero extends Persona{
 
     @Override
     public String toString() {
-        return "Pasajero{" +
+        return "com.company.Personal.Pasajero{" +
                 "cantidadDeDinero=" + cantidadDeDinero +
                 ", paisDeOrigen='" + paisDeOrigen + '\'' +
                 ", domicilio='" + domicilio + '\'' +
