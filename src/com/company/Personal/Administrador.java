@@ -1,26 +1,22 @@
 package com.company.Personal;
 
-public class Administrador extends Recepcionista {
+import com.company.Habitacion;
+
+
+
+public class Administrador extends Recepcionista{
 
     public Administrador(String nombre, String apellido,double sueldo,String turno, long dni) {
         super(nombre, apellido, dni,sueldo,turno);
 
     }
 
+    //con esta funcion se actualizara en el archivo json que habitaciones estan disponibles
     public void actualizarHabitacionesDisponibles(Habitacion habitacionNoDisponible)
     {
 
     }
-    public Recepcionista crearUnNuevoResepcionista(String nombre, String apellido, long dni, int sueldo, String turno)
-    {
-        Recepcionista nuevoRecepcionista;
-        return nuevoRecepcionista =new Recepcionista(nombre,apellido,dni,sueldo,turno);
-    }
-    public Administrador crearUnNuevoAdministrador(String nombre,String apellido,long dni,int sueldo,String turno)
-    {
-        Administrador nuevoAdministrador;
-        return nuevoAdministrador =new Administrador(nombre,apellido,sueldo,turno,dni);
-    }
+
 
     @Override
     public String toString() {

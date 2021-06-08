@@ -1,60 +1,142 @@
 package com.company.Personal;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
-public class Pasajero extends Persona {
-    private double cantidadDeDinero;
+import com.company.Hotel;
+import com.company.Producto;
+import com.company.Reserva;
 
 
+public class Pasajero extends Persona{
+    private double saldo;
     private String paisDeOrigen;
     private String domicilio;
-    private String metodoDePago="efectivo";
-    private ArrayList<Reserva> historialEnElHotel=new ArrayList<>();
+    public MedioDePago formaDePago;
+    private List<Reserva> historialEnElHotel=new ArrayList<>();
 
-    public Pasajero(String nombre, String apellido, long dni, double cantidadDeDinero,
-                    String paisDeOrigen, String domicilio) {
+    public Pasajero(String nombre, String apellido, long dni, double saldo,
+                    String paisDeOrigen, String domicilio,String medioDePago) {
         super(nombre, apellido, dni);
-        this.cantidadDeDinero = cantidadDeDinero;
+        this.saldo = saldo;
         this.paisDeOrigen = paisDeOrigen;
         this.domicilio = domicilio;
-    }
+        formaDePago=MedioDePago.valueOf(medioDePago.toUpperCase());//me aseguro de que siempre el texto medioDePago se
+        // lee como todo en mayuscula
+        switch (formaDePago)
+        {
+            case DEBITO:
+                System.out.println("el usuario utilizara su tarjeta de debito como medio de pago");
+                formaDePago=formaDePago.DEBITO;
+                break;
+            case CREDITO:
+                System.out.println("el usuario utilizara su tarjeta de credito como medio de pago");
+                formaDePago=formaDePago.CREDITO;
+                break;
+            case EFECTIVO:
+                formaDePago=formaDePago.EFECTIVO;
+                System.out.println("el usuario utilizara efectivo como medio de pago\n");
+                System.out.println("valor actual cambio:100 pesos argentinos por dolar\n");
+                System.out.println("¿Que divisa usted tiene(peso argentino o " +
+                        "dolar estadounidense\n)?");
+
+                Scanner divisa_=new Scanner(System.in);
+                System.out.println("1-peso argentino \n" +
+                        "2-dolar estadounidense \n");
 
 
-//en el caso de que el pasajerpo se quiera ir antes de tiempo puede solicitar la devolucion del valor
-// de sus dias restantes
-    //por ejemplo si paga 600 y se queda 5 dias
-    //600:5=120
-    //si se va en el dia 3 le devolvemos 240(dia 4 y 5)
-    public void solicitarReenbolsoReserva(Reserva reserva)
-    {
-        //para calcular en el dia en el que estamos restarle al check in la fecha actual
-        //check in=20 de diciembre    actual 22 de diciembre
-        //y el periodo es 5
-        //22-20=2     |5-2=3 es decir estamos en el dia 3
-
-    }
-    public void solicitarUnProducto(String nombreProducto,ArrayList<Producto>producto)
-    {
-        for (Producto productoActual: producto) {
-            if(productoActual.getNombre().equals(nombreProducto))
-            {
-                if(productoActual.getStock()>0)
+                if(divisa_.nextInt()==1)
                 {
-                    //aca se pondria que se consumio el producto
+                    System.out.println("\n**********************************\n");
+                    System.out.println("usted eligio el peso argentino como moneda \n");
+                    System.out.println("\n**********************************\n");
+
+                }
+                else {
+                    System.out.println("\n**********************************\n");
+                    System.out.println("usted eligio el dolar estadounidense como moneda \n");
+                    System.out.println("\n**********************************\n");
+                    this.saldo = saldo * 100;
+                }
+                break;
+            default:System.out.println("\n-ERROR-\n por favor escriba alguna de " +
+                    "las siguientes opciones: DEBITO CREDITO EFECTIVO");
+        }
+
+    }
+
+    public boolean solicitarUnProducto(String nombreProducto,List<Producto>producto,int cantidadAsolicitar)
+    {   boolean operacionExitosa=false;
+        for (Producto productoActual: producto) {
+            if(productoActual.getNombre()==nombreProducto)
+            {
+                if(productoActual.getStock()>cantidadAsolicitar)
+                {
+                    productoActual.setStock(cantidadAsolicitar);
+                    operacionExitosa=true;
+                    return operacionExitosa;
+
+                }else
+                {
+                    //si no contamos con la cantidad solicitada le damos la opcion al pasajero de
+                    //elegir la cantidad disponible actualmente
+                    int cantidadEnStock=cantidadAsolicitar-productoActual.getStock();
+                    System.out.println("cantidad disponible actual--> "+(cantidadEnStock));
+                    System.out.println("si usted desea puede solicitar esta cantidad o seleccionar otro" +
+                            "producto sepa disculpar ");
+                    Scanner opcionElegida=new Scanner(System.in);
+                    System.out.println("\n1-continuar \n" +
+                            " 2-volver al menu\n");
+                    if(opcionElegida.nextInt()==1) {
+                        //le resto al stock la cantidad disponible
+                        productoActual.setStock(cantidadEnStock);
+                        operacionExitosa=true;
+                        return operacionExitosa;
+                    }
+                    else
+                    {
+                        break;//para parar de buscar
+                    }
+                    //si el empleado escribe un 2 automaticamente volvemos
+                    //al menu prinicipal
                 }
             }
 
         }
+        return operacionExitosa;//false
     }
 
+    public  String obtenerFeedback()
+    {
+        System.out.println("si usted desea dejenos su opinion acerca de como se sintio en nuestro establecimiento");
+        Scanner quieroOpinar=new Scanner(System.in);
+        System.out.println("¿Desea opinar?--->si/no");
+
+        if(quieroOpinar.nextLine()=="si")
+        {
+            Scanner opinion=new Scanner(System.in);
+            return opinion.nextLine();
+        }
+
+        return null;
+
+
+    }
     @Override
     public String toString() {
-        return "com.company.Personal.Pasajero{" +
-                "cantidadDeDinero=" + cantidadDeDinero +
+        return "Pasajero{" +
+                "nombre= " + this.getNombre() +
+                " apellido= " + this.getApellido() +
+                " dni= " + getDni() +
+                " saldo= " + saldo +
                 ", paisDeOrigen='" + paisDeOrigen + '\'' +
                 ", domicilio='" + domicilio + '\'' +
-                ", metodoDePago='" + metodoDePago + '\'' +
+                ", formaDePago='" + formaDePago + '\'' +
                 ", historialEnElHotel=" + historialEnElHotel +
                 '}';
     }
+
+
 }
