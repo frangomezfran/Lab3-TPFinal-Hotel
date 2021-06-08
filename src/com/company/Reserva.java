@@ -1,3 +1,5 @@
+package com.company;
+
 import com.company.Personal.Pasajero;
 
 import java.time.LocalDateTime;
@@ -22,13 +24,6 @@ public class Reserva {
 
     }
 
-    //--------------- ID ---------------
-    public static int getId() {
-        return id;
-    }
-    public static void setId(int id) {
-        Reserva.id = id;
-    }
 
     //--------------- Habitacion ---------------
     public Habitacion getHabitacion() {
@@ -42,11 +37,11 @@ public class Reserva {
     public ArrayList<Producto> getProductosConsumidos() {
         return productosConsumidos;
     }
-    public void setProductosConsumidos(ArrayList<Producto> productosConsumidos) {
+    public void aniadirProductosConsumidos(ArrayList<Producto> productosConsumidos) {
         this.productosConsumidos = productosConsumidos;
     }
 
-    //--------------- com.company.Personal.Pasajero ---------------
+    //--------------- Pasajero ---------------
     public Pasajero getPasajero() {
         return pasajero;
     }
@@ -66,15 +61,15 @@ public class Reserva {
 
     public int getCantDiasReserva(){
 
-       int cantDiasReserva = 0;
-       LocalDateTime aux = this.checkOut;
+        int cantDiasReserva = 0;
+        LocalDateTime aux = this.checkOut;
 
-       while(aux.getDayOfYear() != checkIn.getDayOfYear()){
-           cantDiasReserva++;
-           aux.minusDays(1);
-       }
+        while(aux.getDayOfYear() != checkIn.getDayOfYear()){
+            cantDiasReserva++;
+            aux.minusDays(1);
+        }
 
-       return cantDiasReserva;
+        return cantDiasReserva;
     }
 
     public String muestraListaProductos(){
