@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Personal.Pasajero;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -12,18 +13,17 @@ public class Reserva {
     private Pasajero pasajero;
     private ArrayList<Producto> productosConsumidos =  new ArrayList<>();
     private LocalDateTime checkIn;
-    private LocalDateTime checkOut;
+    private LocalDateTime checkOut; //Es un atributo para ver el historial
+    private String opinion;
 
     //--------------- Constructor ---------------
-    public Reserva(Pasajero pasajero, Habitacion habitacion, int cantDiasReserva) {
+    public Reserva(LocalDateTime checkIn,Pasajero pasajero, Habitacion habitacion, int cantDiasReserva) {
         this.pasajero = pasajero;
         this.habitacion = habitacion;
-        this.checkIn = LocalDateTime.now(); // Reserva se instanciara solo entre las 14:00 y las 00:00, los horarios del checkin
+        this.checkIn = checkIn;
         this.checkOut= checkIn.plusDays(cantDiasReserva);
         this.id = this.creaID();
-
     }
-
 
     //--------------- Habitacion ---------------
     public Habitacion getHabitacion() {
@@ -56,20 +56,28 @@ public class Reserva {
     public void setCheckIn(LocalDateTime checkIn) {
         this.checkIn = checkIn;
     }
+    //--------------- CheckOut ---------------
+    public LocalDateTime getCheckOut() {
+        return checkOut;
+    }
+    public void setCheckOut(LocalDateTime checkOut) {
+        this.checkOut = checkOut;
+    }
+
+    //--------------- Opinion ---------------
+    public String getOpinion() {
+        return opinion;
+    }
+    public void setOpinion(String opinion) {
+        this.opinion = opinion;
+    }
+
 
     //--------------- Metodos ---------------
 
-    public int getCantDiasReserva(){
+    public int getCantDiasReserva() {
 
-        int cantDiasReserva = 0;
-        LocalDateTime aux = this.checkOut;
-
-        while(aux.getDayOfYear() != checkIn.getDayOfYear()){
-            cantDiasReserva++;
-            aux.minusDays(1);
-        }
-
-        return cantDiasReserva;
+        return (int) Duration.between(checkIn.toLocalDate(), checkOut.toLocalDate()).toDays();
     }
 
     public String muestraListaProductos(){
@@ -103,12 +111,15 @@ public class Reserva {
         return ( this.habitacion.getPrecio() * this.getCantDiasReserva() );
     }
 
-    public void pasajeroSeQuedaMasDias(int dias){//Pulir
-        this.checkOut.plusDays(dias);
-    }
+    public boolean eliminaProductoConsumido(String nombre){
 
-    public void pasajeroSeVaAntesDelCheckOut(int dias){//Pulir
-        this.checkOut.minusDays(dias);
+        for(Producto aux : productosConsumidos){
+            if(aux.getNombre().equals(nombre)){
+                productosConsumidos.remove(aux);
+                return true;
+            }
+        }
+        return false;
     }
 
     public double gastoTotal(){
@@ -124,4 +135,16 @@ public class Reserva {
 
     }
 
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "id='" + id + '\'' +
+                ", habitacion=" + habitacion +
+                ", pasajero=" + pasajero +
+                ", productosConsumidos=" + productosConsumidos +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", opinion='" + opinion + '\'' +
+                '}';
+    }
 }

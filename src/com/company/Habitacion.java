@@ -1,6 +1,5 @@
 package com.company;
 
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -25,7 +24,6 @@ public class Habitacion {
     public int getCantCamas() {
         return cantCamas;
     }
-
     public void setCantCamas(int cantCamas) {
         this.cantCamas = cantCamas;
     }
@@ -34,7 +32,6 @@ public class Habitacion {
     public int getPiso() {
         return piso;
     }
-
     public void setPiso(int piso) {
         this.piso = piso;
     }
@@ -44,7 +41,6 @@ public class Habitacion {
         return letra;
 
     }
-
     public void setLetra(char letra) {
         this.letra = letra;
     }
@@ -54,7 +50,6 @@ public class Habitacion {
     public double getPrecio() {
         return precio;
     }
-
     public void setPrecio(double precio) {
         this.precio = precio;
     }
@@ -63,12 +58,20 @@ public class Habitacion {
     public ArrayList<Producto> getListaProductos() {
         return listaProductos;
     }
-
     public void setListaProductos(ArrayList<Producto> listaProductos) {
         this.listaProductos = listaProductos;
     }
 
-//--------------- Metodos ---------------
+    //--------------- Estado de la Habitacion ---------------
+    public EstadoHabitacion getEstadoHabitacion() {
+        return estadoHabitacion;
+    }
+    public void setEstadoHabitacion(EstadoHabitacion estadoHabitacion) {
+        this.estadoHabitacion = estadoHabitacion;
+    }
+
+
+    //--------------- Metodos ---------------
 
     //establecer precio segun el tipo de habitacion que sea
 
@@ -98,4 +101,16 @@ public class Habitacion {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Habitacion{" +
+                "cantCamas=" + cantCamas +
+                ", piso=" + piso +
+                ", letra=" + letra +
+                ", tipoHabitacion=" + tipoHabitacion +
+                ", precio=" + precio +
+                ", listaProductos=" + listaProductos +
+                ", estadoHabitacion=" + estadoHabitacion +
+                '}';
+    }
 }

@@ -11,12 +11,13 @@ import com.company.Reserva;
 
 
 public class Pasajero extends Persona{
+
     private double saldo;
     private String paisDeOrigen;
     private String domicilio;
     public MedioDePago formaDePago;
-    private List<Reserva> historialEnElHotel=new ArrayList<>();
 
+    //--------------Constructor--------------
     public Pasajero(String nombre, String apellido, long dni, double saldo,
                     String paisDeOrigen, String domicilio,String medioDePago) {
         super(nombre, apellido, dni);
@@ -55,15 +56,46 @@ public class Pasajero extends Persona{
 
     }
 
-    public void solicitarUnProducto(String nombreProducto,List<Producto>producto)
+    //--------------Saldo--------------
+    public double getSaldo() {
+        return saldo;
+    }
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    //--------------Pais de Origen--------------
+    public String getPaisDeOrigen() {
+        return paisDeOrigen;
+    }
+    public void setPaisDeOrigen(String paisDeOrigen) {
+        this.paisDeOrigen = paisDeOrigen;
+    }
+
+    //--------------Domicilio--------------
+    public String getDomicilio() {
+        return domicilio;
+    }
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    //--------------Forma de Pago--------------
+    public MedioDePago getFormaDePago() {
+        return formaDePago;
+    }
+    public void setFormaDePago(MedioDePago formaDePago) {
+        this.formaDePago = formaDePago;
+    }
+
+
+    //--------------Metodos--------------
+    public void solicitarUnProducto(String nombreProducto, List<Producto>producto)
     {
         for (Producto productoActual: producto) {
-            if(productoActual.getNombre()==nombreProducto)
+            if(productoActual.getNombre().equals(nombreProducto) && productoActual.getStock()>0)
             {
-                if(productoActual.getStock()>0)
-                {
-                    //aca se pondria que se consumio el producto
-                }
+                //aca se pondria que se consumio el producto
             }
 
         }
@@ -85,6 +117,13 @@ public class Pasajero extends Persona{
         }
 
     }
+
+    public void escribeOpinionReserva (Hotel hotel,String opinion){
+
+        hotel.retornaReservadelPasajero(this.getDni()).setOpinion(opinion);
+
+    }
+
     @Override
     public String toString() {
         return "Pasajero{" +
@@ -92,7 +131,6 @@ public class Pasajero extends Persona{
                 ", paisDeOrigen='" + paisDeOrigen + '\'' +
                 ", domicilio='" + domicilio + '\'' +
                 ", formaDePago='" + formaDePago + '\'' +
-                ", historialEnElHotel=" + historialEnElHotel +
                 '}';
     }
 

@@ -14,16 +14,14 @@ public class Administrador extends Recepcionista{
     {
 
     }
-    public void crearUnNuevoResepcionista(String nombre,String apellido,long dni,int sueldo,String turno)
+    public void crearUnNuevoResepcionista(Hotel hotel,String nombre,String apellido,long dni,int sueldo,String turno)
     {
-        Hotel.cantidadEmpleados++;
-        Hotel.listaEmpleados.add(new Recepcionista(nombre,apellido,dni,sueldo,turno));
+        hotel.getListaEmpleados().add(new Recepcionista(nombre,apellido,dni,sueldo,turno));
     }
-    public void crearUnNuevoAdministrador(String nombre,String apellido,long dni,int sueldo,String turno)
-    {
-        Hotel.cantidadEmpleados++;
-        Hotel.listaEmpleados.add(new Administrador(nombre,apellido,sueldo,turno,dni));
 
+    public void crearUnNuevoAdministrador(Hotel hotel,String nombre,String apellido,long dni,int sueldo,String turno)
+    {
+        hotel.getListaEmpleados().add(new Administrador(nombre,apellido,sueldo,turno,dni));
     }
 
     @Override
