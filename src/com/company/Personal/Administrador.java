@@ -2,6 +2,7 @@ package com.company.Personal;
 
 import com.company.Habitacion;
 import com.company.Hotel;
+import com.company.TipoHabitacion;
 
 public class Administrador extends Recepcionista{
 
@@ -22,6 +23,17 @@ public class Administrador extends Recepcionista{
     public void crearUnNuevoAdministrador(Hotel hotel,String nombre,String apellido,long dni,int sueldo,String turno)
     {
         hotel.getListaEmpleados().add(new Administrador(nombre,apellido,sueldo,turno,dni));
+    }
+
+    public void establecePreciosHabitaciones(Hotel hotel,TipoHabitacion tipo,double precio){
+
+        for(Habitacion aux : hotel.getListaHabitaciones()){
+
+            if(aux.getTipoHabitacion() == tipo){
+                aux.setPrecio(precio);
+            }
+        }
+
     }
 
     @Override

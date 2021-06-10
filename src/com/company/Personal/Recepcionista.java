@@ -58,8 +58,6 @@ public class Recepcionista extends Persona{
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/d/yyyy");
         LocalDate date = LocalDate.parse(userInput, dateFormat);
 
-
-        System.out.println(date);
         return date ;
     }
 
@@ -110,7 +108,7 @@ public class Recepcionista extends Persona{
         return habitacionesOcupadasFecha;
     }
 
-    public String muestraHabitacionesDisponibles (Hotel hotel, LocalDate fecha, int cantDias){
+    public String muestraHabitacionesDisponibles (Hotel hotel, int cantPersonas,LocalDate fecha, int cantDias){
 
         ArrayList<Habitacion> habitacionesOcupadasPorFecha = habitacionesOcupadasPorFecha(hotel,fecha,cantDias);
 
@@ -120,7 +118,7 @@ public class Recepcionista extends Persona{
 
             for(Habitacion habitacionNoMostrar : habitacionesOcupadasPorFecha){
 
-                if(!habitaciones.equals(habitacionNoMostrar))
+                if(!habitaciones.equals(habitacionNoMostrar) && habitaciones.getTipoHabitacion().getCantPersonas()>=cantPersonas)
                     habitacionesDisponibles += habitaciones.toString();
 
             }
@@ -143,16 +141,18 @@ public class Recepcionista extends Persona{
 
     }
 
-    public void crearUnNuevoUsuario(Hotel hotel,String nombre,String apellido,long dni,double saldo
-            ,String paisDeOrigen,String domicilio,String medioDePago)//creo al pasajero
+    public Pasajero crearUnNuevoUsuario(Hotel hotel,String nombre,String apellido,long dni,
+                                    String paisDeOrigen,String domicilio,MedioDePago medioDePago)//creo al pasajero
     {
-       Pasajero nuevoPasajero = new Pasajero(nombre,apellido,dni,saldo,paisDeOrigen,domicilio,medioDePago);
+       Pasajero pasajero = new Pasajero(nombre,apellido,dni,paisDeOrigen,domicilio,medioDePago);
 
-       hotel.agregaNuevoPasajero(nuevoPasajero);
+       hotel.agregaNuevoPasajero(pasajero);
+
+       return pasajero;
 
     }
 
-    public void modificarReserva(Hotel hotel,long dni)
+    /*public void modificarReserva(Hotel hotel,long dni)
     {
         //Ojo que si modifico algun atributo cambio el id de la reserva
 
@@ -270,6 +270,38 @@ public class Recepcionista extends Persona{
             }
 
         }while(opcion!=0);
+    }*/
+
+    public String checkearCheckOutsDia(Hotel hotel){
+
+        String reservasQueFinalizanHoy = "Habitaciones de reservas que finalizan hoy: ("+LocalDate.now()+")\n";
+        int i = 1;
+
+        for(Reserva aux : hotel.getListaReservas()){
+
+            if(aux.getCheckOut().toLocalDate().equals(LocalDate.now())){
+
+                reservasQueFinalizanHoy += i+") Piso: "+aux.getHabitacion().getPiso()+" | Letra: "+aux.getHabitacion().getLetra();
+                i++;
+
+            }
+
+        }
+
+        return reservasQueFinalizanHoy;
+
+    }
+
+    public void terminaReserva(Hotel hotel,long dni){
+
+        Reserva aCobrar = hotel.retornaReservadelPasajero(dni);
+
+        if(LocalDateTime.now().isBefore(aCobrar.getCheckOut())){
+            System.out.println("El total es de : "+aCobrar.gastoTotal());
+        }else{
+            //Cobramos una dia mas de la habitacion
+        }
+
     }
 
     @Override
