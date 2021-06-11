@@ -82,6 +82,11 @@ public class Recepcionista extends Persona{
         //Creo un arreglo con los dias que quiere quedarse el nuevo pasajero
         LocalDate[] diasAComparar = diasDeReservaAArray(fecha,cantDias);
 
+        System.out.println(diasAComparar[0]);
+        System.out.println(diasAComparar[1]);
+        System.out.println(diasAComparar[2]);
+
+
         ArrayList<Habitacion> habitacionesOcupadasFecha = new ArrayList<>();
 
         for(Reserva aux : hotel.getListaReservas()){
@@ -90,6 +95,7 @@ public class Recepcionista extends Persona{
                 || diasAComparar[0].getMonthValue() == aux.getCheckIn().getMonthValue()+1 ){
                 //Suponiendo que un pasajero no se va a quedar mas de 1 mes en una habitacion
 
+                System.out.println("Entre");
                 LocalDate[] diasReserva = diasDeReservaAArray(aux.getCheckIn().toLocalDate(),aux.getCantDiasReserva());
 
                 for ( int i = 0; i< cantDias ; i++){
@@ -118,12 +124,15 @@ public class Recepcionista extends Persona{
 
         for(Habitacion habitaciones : hotel.getListaHabitaciones()){
 
-            for(Habitacion habitacionNoMostrar : habitacionesOcupadasPorFecha){
+            for(Habitacion habitacionNoMostrar : habitacionesOcupadasPorFecha){//Esta lista esta vacia
+
+                System.out.println("hola1");
 
                 if(!habitaciones.equals(habitacionNoMostrar) &&
-                        habitaciones.getTipoHabitacion().getCantPersonas()>=cantPersonas)
-
+                        habitaciones.getTipoHabitacion().getCantPersonas()>=cantPersonas) {
+                    System.out.println("hola");
                     habitacionesDisponibles.add(habitaciones);
+                }
 
             }
         }
@@ -134,11 +143,12 @@ public class Recepcionista extends Persona{
 
     public LocalDate[] diasDeReservaAArray(LocalDate checkIn , int cantDiasHospedaje ){ //Metodo para habitacionesDisponibles
 
-        LocalDate diasDeEstadias[]= new LocalDate [cantDiasHospedaje];
+        LocalDate[] diasDeEstadias= new LocalDate [cantDiasHospedaje];
 
         for(int i = 0 ; i<cantDiasHospedaje ; i++){
+
             diasDeEstadias[i]=checkIn;
-            checkIn.plusDays(1);
+            checkIn=checkIn.plusDays(1);
         }
 
         return diasDeEstadias;

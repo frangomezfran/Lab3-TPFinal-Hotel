@@ -169,6 +169,9 @@ public class Menu {
     public void menuAdministrador(Hotel hotel, Administrador gestionador){
 
         menuRecepcionista(hotel,gestionador);
+        System.out.println("N- Modificar precios de las habitaciones\nN- Agregar un nuevo recepcionista\n" +
+                "N- Agregar un nuevo Administrador\nN- Eliminar algun empleado\nN- Editar un Empleado\n" +
+                "N- ");
 
     }
 
@@ -176,11 +179,15 @@ public class Menu {
 
         int opcion=0;
 
-        do{
+        do {
+            //En algun momento cuando el pasajero este en la habitacion, el estado de la habitacion tiene q estar Reservada,
+            //Cuando se termina la reserva, esa habitacion tiene q estar en Disponible
 
             System.out.println("Que desea hacer "+gestionador.getNombre());
-            System.out.println("1- Crear Nueva Reserva\n2- Modificar Reservas\n3- Modificar Usuario\n" +
-                    "4- Ver precios habitaciones\n5-Ver Habitaciones disponibles para hoy");
+            System.out.println("1- Crear Nueva Reserva\n2- Terminar una reserva\n3- Ver/Modificar Reservas\n4- Modificar Usuario\n" +
+                    "5- Ver precios habitaciones\n6- Ver Habitaciones disponibles para hoy\n7- Ver Checkouts de hoy" +
+                    "\n8- Actualizar lista de productos de una habitacion\n9- Modificar estado de una habitacion de hoy" +
+                    "\n10-");
 
             switch (pideEntero()){
 
@@ -277,7 +284,13 @@ public class Menu {
 
                     break;
 
-                case(2)://Modifica Reserva Vigentes
+                case(2)://Termina reserva
+
+                    //gestionador.terminaReserva(hotel);
+
+                    break;
+
+                case(3)://Modifica-Ver Reservas Vigentes
 
                     long auxDni;
                     Reserva aModificar;
@@ -299,7 +312,7 @@ public class Menu {
 
                     break;
 
-                case(3):
+                case(4)://Modificar un usuario
 
                     Pasajero pasajeroAModificar=null;
                     long dniAux=0;
@@ -320,6 +333,24 @@ public class Menu {
                     modificarUsuario(hotel,pasajeroAModificar);
                     break;
 
+                case(5)://Ver precios de las habitaciones
+                    break;
+
+                case(6)://Ver habitaciones disponibles para hoy
+                    break;
+
+                case(7)://Ver Check-Outs para Hoy
+                    break;
+
+                case(8)://Actualizar lista de productos de una habitacion q esta ocupada
+                    break;
+
+                case(9)://Modificar estado de una habitacion
+                    break;
+
+                case(10):
+                    break;
+
                 default:
                     System.out.println("Opcion mal ingresada, Intentelo de nuevo");
             }
@@ -335,13 +366,13 @@ public class Menu {
 
         int opcion = 0;
 
-        do{
+        do{//Podria agregar eliminar reserva
             System.out.println("Que se desea Modificar de la reserva ?\n1-Habitacion (P:"+aModificar.getHabitacion().getPiso()+
                             "L:"+aModificar.getHabitacion().getLetra()+")\n2-Pasajero (DNI:"+aModificar.getPasajero().getDni()+")" +
                             "\n3-Cancelar un producto supuestamente consumido\n4-CheckIn ("+aModificar.getCheckIn().toLocalDate()+")" +
                             "\n5-Cantidad de dias de Hospedaje ("+aModificar.getCantDiasReserva()+")\n0-Salir");
 
-            switch (opcion=input.nextInt()) {
+            switch (opcion=pideEntero()) {
                 case (1):
 
                     int piso;

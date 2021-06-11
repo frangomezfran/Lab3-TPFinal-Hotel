@@ -19,6 +19,28 @@ public class Main {
 
         Esteban.crearUnNuevoResepcionista(trivago,"Andrea","Gimenez",29312423,50000,"Mañana");
 
+        Habitacion habitacion1 = new Habitacion(TipoHabitacion.SIMPLE,1,'A');
+        Habitacion habitacion2 = new Habitacion(TipoHabitacion.SIMPLE,1,'B');
+        Habitacion habitacion3 = new Habitacion(TipoHabitacion.SIMPLE,1,'C');
+        Habitacion habitacion4 = new Habitacion(TipoHabitacion.DOBLE_MATRIMONIAL,2,'A');
+        Habitacion habitacion5 = new Habitacion(TipoHabitacion.DOBLE_MATRIMONIAL,2,'B');
+        Habitacion habitacion6 = new Habitacion(TipoHabitacion.DOBLE_TWIN,2,'C');
+        Habitacion habitacion7 = new Habitacion(TipoHabitacion.TRIPLE_MATRIMONIAL,3,'A');
+        Habitacion habitacion8 = new Habitacion(TipoHabitacion.TRIPLE_MATRIMONIAL,3,'B');
+        Habitacion habitacion9 = new Habitacion(TipoHabitacion.PRESIDENCIAL,3,'C');
+        Habitacion habitacion10 = new Habitacion(TipoHabitacion.GOBERNADOR,4,'A');
+
+        trivago.agregaHabitacion(habitacion1);
+        trivago.agregaHabitacion(habitacion2);
+        trivago.agregaHabitacion(habitacion3);
+        trivago.agregaHabitacion(habitacion4);
+        trivago.agregaHabitacion(habitacion5);
+        trivago.agregaHabitacion(habitacion6);
+        trivago.agregaHabitacion(habitacion7);
+        trivago.agregaHabitacion(habitacion8);
+        trivago.agregaHabitacion(habitacion9);
+        trivago.agregaHabitacion(habitacion10);
+
 
         Menu menu = new Menu();
 
