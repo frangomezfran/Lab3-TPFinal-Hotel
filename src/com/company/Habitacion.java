@@ -18,6 +18,7 @@ public class Habitacion {
         this.tipoHabitacion=tipoHabitacion;
         this.piso = piso;
         this.letra = letra;
+        this.estadoHabitacion=EstadoHabitacion.DISPONIBLE;
     }
 
     //--------------- Piso ---------------
@@ -81,7 +82,7 @@ public class Habitacion {
     @Override
     public String toString() {
         return "Habitacion{" +
-                ", Tipo=" + tipoHabitacion.toString() +
+                " Tipo=" + tipoHabitacion.getTipo() +
                 ", piso=" + piso +
                 ", letra=" + letra +
                 ", precio=" + precio +

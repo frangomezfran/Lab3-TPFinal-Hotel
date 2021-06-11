@@ -5,4 +5,5 @@ public enum EstadoHabitacion {
     RESERVADA,
     EN_REPARACION,
     EN_DESINFECCION;
+
 }

@@ -5,6 +5,7 @@ import com.company.Personal.Pasajero;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Reserva {
@@ -97,7 +98,9 @@ public class Reserva {
 
     public int getCantDiasReserva() {
 
-        return (int) Duration.between(checkIn.toLocalDate(), checkOut.toLocalDate()).toDays();
+        LocalDateTime tempDateTime = LocalDateTime.from( this.checkIn );
+
+        return (int) tempDateTime.until( this.checkOut, ChronoUnit.DAYS)+1;
     }
 
     public String muestraListaProductosConsumidos(){

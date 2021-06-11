@@ -77,17 +77,11 @@ public class Recepcionista extends Persona{
 
     public ArrayList<Habitacion> habitacionesOcupadasPorFecha(Hotel hotel, LocalDate fecha, int cantDias){
 
-        LocalDate copiaDeFecha = fecha ;
-
-        //Creo un arreglo con los dias que quiere quedarse el nuevo pasajero
+        //Creo un arreglo de fechas de los dias del nuevo pasajero
         LocalDate[] diasAComparar = diasDeReservaAArray(fecha,cantDias);
 
-        System.out.println(diasAComparar[0]);
-        System.out.println(diasAComparar[1]);
-        System.out.println(diasAComparar[2]);
-
-
         ArrayList<Habitacion> habitacionesOcupadasFecha = new ArrayList<>();
+
 
         for(Reserva aux : hotel.getListaReservas()){
 
@@ -96,18 +90,25 @@ public class Recepcionista extends Persona{
                 //Suponiendo que un pasajero no se va a quedar mas de 1 mes en una habitacion
 
                 System.out.println("Entre");
+
+                //Arreglo de fechas pero de las reservas
                 LocalDate[] diasReserva = diasDeReservaAArray(aux.getCheckIn().toLocalDate(),aux.getCantDiasReserva());
 
                 for ( int i = 0; i< cantDias ; i++){
+
                     for ( int j=0; j< aux.getCantDiasReserva()-1 ; j++) {
                         //la ultima celda no se compara porque ese dia, es cuando el q reservo hace el chekout.Por eso el -1
 
                         if (diasAComparar[i] == diasReserva[j]) {
-                            habitacionesOcupadasFecha.add(aux.getHabitacion());//Tengo que mostrar todas las habitaciones menos estas
+
+                            //Habitaciones que no se muestran,estan ocupadas para la fecha del nuevo pasajero
+                            habitacionesOcupadasFecha.add(aux.getHabitacion());
                             break;
                         }
 
+                        //Se sigue comparando, tengo q arreglar aca
                     }
+
                 }
             }
         }
@@ -118,23 +119,24 @@ public class Recepcionista extends Persona{
 
         ArrayList<Habitacion> habitacionesOcupadasPorFecha = habitacionesOcupadasPorFecha(hotel,fecha,cantDias);
 
-        ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
+        ArrayList<Habitacion> habitacionesDisponibles = hotel.getListaHabitaciones();
 
         //String habitacionesDisponibles="Habitaciones disponibles para la fecha "+fecha+" hasta "+fecha.plusDays(cantDias)+"\n";
 
-        for(Habitacion habitaciones : hotel.getListaHabitaciones()){
+        for(Habitacion habitaciones : habitacionesDisponibles){
 
             for(Habitacion habitacionNoMostrar : habitacionesOcupadasPorFecha){//Esta lista esta vacia
 
                 System.out.println("hola1");
 
-                if(!habitaciones.equals(habitacionNoMostrar) &&
+                if(!habitaciones.equals(habitacionNoMostrar) ||
                         habitaciones.getTipoHabitacion().getCantPersonas()>=cantPersonas) {
                     System.out.println("hola");
-                    habitacionesDisponibles.add(habitaciones);
+                    habitacionesDisponibles.remove(habitacionNoMostrar);
                 }
 
             }
+
         }
 
         return habitacionesDisponibles;
@@ -197,6 +199,7 @@ public class Recepcionista extends Persona{
         }else{
             //Cobramos una dia mas de la habitacion
         }
+        //Decirle al pasajero que escriba una opinion
 
     }
 

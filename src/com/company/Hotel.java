@@ -116,9 +116,9 @@ public class Hotel {
 
     public Reserva retornaReservaVigentedelPasajero(long dni){
 
-        for(Reserva aux : listaReservas){
+        for(Reserva aux : this.listaReservas){
             if(aux.getPasajero().getDni()==dni &&
-                aux.getCheckOut().isBefore(LocalDateTime.now()))
+                aux.getCheckOut().isAfter(LocalDateTime.now()))
                 return aux;//Las reservas estan ingresadas por la mas nueva a la mas vieja
         }
         return null; //Por x razon si no existe...
