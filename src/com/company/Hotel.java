@@ -114,6 +114,18 @@ public class Hotel {
         return null; //Por x razon si no existe...
     }
 
+    public Reserva retornaReservaVigentedelPasajero(long dni){
+
+        for(Reserva aux : listaReservas){
+            if(aux.getPasajero().getDni()==dni &&
+                aux.getCheckOut().isBefore(LocalDateTime.now()))
+                return aux;//Las reservas estan ingresadas por la mas nueva a la mas vieja
+        }
+        return null; //Por x razon si no existe...
+    }
+
+
+
     public boolean agregaNuevoPasajero (Pasajero pasajero){
 
         for(Pasajero aux : listaPasajeros){
@@ -154,6 +166,7 @@ public class Hotel {
         }
         return null;
     }
+
 
     @Override
     public String toString() {

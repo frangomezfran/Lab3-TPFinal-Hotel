@@ -38,11 +38,11 @@ public class Recepcionista extends Persona{
     }
 
     //--------------- Metodos ---------------
-    public void creaReserva(Hotel hotel,Habitacion habitacion,LocalDateTime fecha,int cantDiasHospedaje, Pasajero pasajero){
+    public void creaReserva(Hotel hotel,Habitacion habitacion,LocalDateTime fecha,int cantDiasHospedaje, Pasajero pasajero,int cantPersonas){
 
         if(habitacionOcupada(hotel,fecha.toLocalDate(),cantDiasHospedaje,habitacion)) {
 
-            Reserva nuevaReserva = new Reserva(fecha, pasajero, habitacion, cantDiasHospedaje);
+            Reserva nuevaReserva = new Reserva(fecha, pasajero, habitacion, cantDiasHospedaje,cantPersonas);
 
             hotel.agregaReserva(nuevaReserva);
 
@@ -108,18 +108,22 @@ public class Recepcionista extends Persona{
         return habitacionesOcupadasFecha;
     }
 
-    public String muestraHabitacionesDisponibles (Hotel hotel, int cantPersonas,LocalDate fecha, int cantDias){
+    public ArrayList<Habitacion> retornaHabitacionesDisponibles (Hotel hotel, int cantPersonas,LocalDate fecha, int cantDias){
 
         ArrayList<Habitacion> habitacionesOcupadasPorFecha = habitacionesOcupadasPorFecha(hotel,fecha,cantDias);
 
-        String habitacionesDisponibles="Habitaciones disponibles para la fecha "+fecha+" hasta "+fecha.plusDays(cantDias)+"\n";
+        ArrayList<Habitacion> habitacionesDisponibles = new ArrayList<>();
+
+        //String habitacionesDisponibles="Habitaciones disponibles para la fecha "+fecha+" hasta "+fecha.plusDays(cantDias)+"\n";
 
         for(Habitacion habitaciones : hotel.getListaHabitaciones()){
 
             for(Habitacion habitacionNoMostrar : habitacionesOcupadasPorFecha){
 
-                if(!habitaciones.equals(habitacionNoMostrar) && habitaciones.getTipoHabitacion().getCantPersonas()>=cantPersonas)
-                    habitacionesDisponibles += habitaciones.toString();
+                if(!habitaciones.equals(habitacionNoMostrar) &&
+                        habitaciones.getTipoHabitacion().getCantPersonas()>=cantPersonas)
+
+                    habitacionesDisponibles.add(habitaciones);
 
             }
         }
@@ -152,125 +156,7 @@ public class Recepcionista extends Persona{
 
     }
 
-    /*public void modificarReserva(Hotel hotel,long dni)
-    {
-        //Ojo que si modifico algun atributo cambio el id de la reserva
 
-        Reserva reservaAModificar = hotel.retornaReservadelPasajero(dni);
-
-        Scanner input = new Scanner(System.in);
-
-        int opcion = 0;
-
-        do{
-            System.out.println("Que se desea Modificar de la reserva ?\n1-Habitacion\n2-Pasajero\n3-Retirar" +
-                    "Un producto canceloado\n4-CheckIn\n5-Cantidad de dias de Hospedaje\n0-Salir");
-
-            switch (opcion=input.nextInt()) {
-                case (1):
-                    //Modularizar
-                    System.out.println("Ingrese fecha para saber las habitaciones disponibles en formato M/d/yyyy ");
-                    muestraHabitacionesDisponibles(hotel,dateInput(input.next()),reservaAModificar.getCantDiasReserva());
-                    System.out.println("\nIngrese Piso a continuacion de la Letra de la habitacion a modificar ");
-                    Habitacion nuevaHabitacion = hotel.retornaHabitacion(input.next().charAt(0),input.nextInt());
-                    reservaAModificar.setHabitacion(nuevaHabitacion);
-                    //Prints, inputs en parametros, ya veo el profe poniendo un "_" en input y se rompio tuti
-                    break;
-                case (2):
-                    modificarUsuario(hotel);
-                    break;
-                case (3):
-                    //Modularizar
-                    int eliminarOpcion = 0;
-                    do {
-                        reservaAModificar.muestraListaProductos();
-                        System.out.println("Ingrese el nombre del producto a eliminar: ");
-                        if (reservaAModificar.eliminaProductoConsumido(input.next())){
-                            System.out.println("Producto eliminado correctamente");
-                        }else{
-                            System.out.println("Error al eliminar");
-                        }
-                        //Si por x motivo se ingresa mal el nombre
-                        System.out.println("1-Intentar Nuevamente\n0-Salir");
-                        eliminarOpcion = input.nextInt();
-                    }while ( eliminarOpcion == 1 );
-                    break;
-                case (4):
-                    //Ver habitaciones Reservadas antes de modificar
-                    //Aca se modifica CheckIn
-                    break;
-                case (5):
-                    //Ver habitaciones Reservadas antes de modificar
-                    //Aca se modifica Cant dias de hospedaje
-                    break;
-                default:
-                    System.out.println("Opcion mal ingresada");
-            }
-
-        }while(opcion != 0);
-    }
-
-    public void modificarUsuario(Hotel hotel)
-    {
-
-        System.out.println("Ingrese dni del usuario a modificar :");
-
-        Scanner input = new Scanner(System.in);
-
-        Pasajero pasajeroaModificar = hotel.retornaPasajero(input.nextLong());
-
-        int opcion = 0;
-
-        do{
-            System.out.println("Que desea modificar del pasajero ?\n1-Nombre\n2-Apellido\n3-Dni"
-                    +"\n4-Saldo\n5-Pais De Origen\n6-Domicilio\n7-Forma de Pago\n0-Salir");
-
-            switch (opcion=input.nextInt()) {
-                case (1):
-                    System.out.println("Nombre actualmente: "+pasajeroaModificar.getNombre()+"\nIngrese Nombre a modificar: ");
-                    pasajeroaModificar.setNombre(input.next());
-                    break;
-                case (2):
-                    System.out.println("Apellido actualmente: "+pasajeroaModificar.getApellido()+"\nIngrese Apellido a modificar: ");
-                    pasajeroaModificar.setApellido(input.next());
-                    break;
-                case (3):
-                    System.out.println("Dni actualmente : "+pasajeroaModificar.getDni()+"\nIngrese Dni a modificar: ");
-                    pasajeroaModificar.setDni(input.nextLong());
-                    break;
-                case (4):
-                    System.out.println("Saldo actualmente: "+pasajeroaModificar.getSaldo()+"$\nIngrese Saldo a modificar: ");
-                    pasajeroaModificar.setSaldo(input.nextDouble());
-                    break;
-                case (5):
-                    System.out.println("Pais de Origen actualmente: "+pasajeroaModificar.getPaisDeOrigen()+"\nIngrese Pais de origen a modificar: ");
-                    pasajeroaModificar.setPaisDeOrigen(input.next());
-                    break;
-                case (6):
-                    System.out.println("Domicilio actualmente: "+pasajeroaModificar.getDomicilio()+"\nIngrese Domicilio a modificar: ");
-                    pasajeroaModificar.setDomicilio(input.next());
-                    break;
-                case (7):
-                    System.out.println("Forma de Pago actualmente: "+pasajeroaModificar.getFormaDePago()+"\nIngrese Apellido a modificar: ");
-                    System.out.println("1-Debito\n2-Credito\n3-Efectivo");
-                    switch (input.nextInt()) {
-                        case (1):
-                            pasajeroaModificar.setFormaDePago(MedioDePago.DEBITO);
-                            break;
-                        case (2):
-                            pasajeroaModificar.setFormaDePago(MedioDePago.CREDITO);
-                            break;
-                        case (3):
-                            pasajeroaModificar.setFormaDePago(MedioDePago.EFECTIVO);
-                            break;
-                    }
-                    break;
-                default:
-                    System.out.println("Opcion mal ingresada");
-            }
-
-        }while(opcion!=0);
-    }*/
 
     public String checkearCheckOutsDia(Hotel hotel){
 

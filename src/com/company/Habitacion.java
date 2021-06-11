@@ -81,6 +81,7 @@ public class Habitacion {
     @Override
     public String toString() {
         return "Habitacion{" +
+                ", Tipo=" + tipoHabitacion.toString() +
                 ", piso=" + piso +
                 ", letra=" + letra +
                 ", precio=" + precio +

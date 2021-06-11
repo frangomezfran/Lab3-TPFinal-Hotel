@@ -26,7 +26,6 @@ public enum TipoHabitacion {
     private final int camasMatrimoniales;
     private final int sofaCama;
 
-
     TipoHabitacion(String tipo, int cantPersonas, int camasIndiviudales, int camasMatrimoniales) {
         this.tipo = tipo;
         this.cantPersonas = cantPersonas;

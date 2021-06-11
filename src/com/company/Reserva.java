@@ -4,6 +4,7 @@ import com.company.Personal.Pasajero;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Reserva {
@@ -11,17 +12,19 @@ public class Reserva {
     private String id; //Podria llegar a generar problemas, pero tengo un registro de el orden de las reservas
     private Habitacion habitacion;
     private Pasajero pasajero;
+    private int cantPersonas;
     private ArrayList<Producto> productosConsumidos =  new ArrayList<>();
     private LocalDateTime checkIn;
     private LocalDateTime checkOut; //Es un atributo para ver el historial
     private String opinion;
 
     //--------------- Constructor ---------------
-    public Reserva(LocalDateTime checkIn,Pasajero pasajero, Habitacion habitacion, int cantDiasReserva) {
+    public Reserva(LocalDateTime checkIn,Pasajero pasajero, Habitacion habitacion, int cantDiasReserva,int cantPersonas) {
         this.pasajero = pasajero;
         this.habitacion = habitacion;
-        this.checkIn = checkIn;
-        this.checkOut= checkIn.plusDays(cantDiasReserva);
+        this.checkIn = checkIn.withHour(14).withMinute(0);
+        this.checkOut= checkIn.plusDays(cantDiasReserva).minusHours(10);
+        this.cantPersonas=cantPersonas;
         this.id = this.creaID();
     }
 
@@ -37,7 +40,7 @@ public class Reserva {
     public ArrayList<Producto> getProductosConsumidos() {
         return productosConsumidos;
     }
-    public void aniadirProductosConsumidos(ArrayList<Producto> productosConsumidos) {
+    public void setProductosConsumidos(ArrayList<Producto> productosConsumidos) {
         this.productosConsumidos = productosConsumidos;
     }
 
@@ -72,6 +75,23 @@ public class Reserva {
         this.opinion = opinion;
     }
 
+    //--------------- ID ---------------
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    //--------------- Cant Personas ---------------
+    public int getCantPersonas() {
+        return cantPersonas;
+    }
+    public void setCantPersonas(int cantPersonas) {
+        this.cantPersonas = cantPersonas;
+    }
+
+
 
     //--------------- Metodos ---------------
 
@@ -80,9 +100,9 @@ public class Reserva {
         return (int) Duration.between(checkIn.toLocalDate(), checkOut.toLocalDate()).toDays();
     }
 
-    public String muestraListaProductos(){
+    public String muestraListaProductosConsumidos(){
 
-        String listaProductosConsumidos = " Productos Consumidos por "+pasajero.getNombre()+" en la habitacion Piso: "+habitacion.getPiso()+" Letra: "+habitacion.getLetra()+": \n";
+        String listaProductosConsumidos="";
 
         for (Producto aux : this.productosConsumidos){
 
@@ -139,12 +159,13 @@ public class Reserva {
     public String toString() {
         return "Reserva{" +
                 "id='" + id + '\'' +
-                ", habitacion=" + habitacion +
-                ", pasajero=" + pasajero +
-                ", productosConsumidos=" + productosConsumidos +
-                ", checkIn=" + checkIn +
-                ", checkOut=" + checkOut +
-                ", opinion='" + opinion + '\'' +
+                ", Habitacion: Letra: " + habitacion.getLetra() + " Piso: "+habitacion.getPiso()+
+                ", Pasajero: NombreyApellido: "+ pasajero.getNombre()+pasajero.getApellido()+" Dni: "+pasajero.getDni()+
+                ", Productos Consumidos: " + muestraListaProductosConsumidos() +
+                ", CheckIn:" + checkIn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - h:m:s")) +
+                ", CheckOut:" + checkOut.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - h:m:s")) +
+                ", Monto Total: "+gastoTotal()+"$"+
+                ", Opinion: '" + opinion + '\'' +
                 '}';
     }
 }
