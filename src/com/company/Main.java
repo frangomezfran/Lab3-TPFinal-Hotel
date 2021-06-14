@@ -11,13 +11,13 @@ public class Main {
 
         Hotel trivago = new Hotel("Trivago","MariaPaz 3232", 3);
 
-        Administrador Esteban = new Administrador("Esteban","Lopez",60000,"Mañana",30123345);
+        Administrador Esteban = new Administrador("Esteban","Lopez",60000,"Mañana",30123345,"esteban");
 
         trivago.agregaEmpleado(Esteban);
 
-        Esteban.crearUnNuevoAdministrador(trivago,"Pedro","Lopez",29323412,60000,"Tarde");
+        Esteban.crearUnNuevoAdministrador(trivago,"Pedro","Lopez",29323412,60000,"Tarde","pedro");
 
-        Esteban.crearUnNuevoResepcionista(trivago,"Andrea","Gimenez",29312423,50000,"Mañana");
+        Esteban.crearUnNuevoResepcionista(trivago,"Andrea","Gimenez",29312423,50000,"Mañana","andrea");
 
         Habitacion habitacion1 = new Habitacion(TipoHabitacion.SIMPLE,1,'A');
         Habitacion habitacion2 = new Habitacion(TipoHabitacion.SIMPLE,1,'B');
@@ -46,8 +46,6 @@ public class Main {
 
         int opcion = 0;
 
-
-        System.out.println("------- Hotel "+trivago.getNombreHotel()+" --------");
 
         Recepcionista gestionador = menu.eligeGestionadorSistema(trivago);//Si instanceoff gestionador == Administraodor -> mas opciones
 

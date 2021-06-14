@@ -79,6 +79,13 @@ public class Habitacion {
 
     }
 
+    public String muestraHabitacion(){
+
+        return "[ Tipo: "+tipoHabitacion.getTipo()+" | CantMax de Personas: "+tipoHabitacion.getCantPersonas()+" | Piso: "+getPiso()+" | Letra: "+getLetra()+" | " +
+                "Precio: "+getPrecio()+" ]";
+
+    }
+
     @Override
     public String toString() {
         return "Habitacion{" +
