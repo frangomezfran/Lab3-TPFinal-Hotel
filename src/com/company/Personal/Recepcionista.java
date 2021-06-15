@@ -231,9 +231,17 @@ public class Recepcionista extends Persona{
 
     }
 
-    public double terminaReserva(Hotel hotel,long dni){
+    public Habitacion retornaHabitacionDeUnaLista(char letra,int piso,ArrayList<Habitacion> habitaciones){
+        //Es para verificar el piso la letra en la lista de las habitaciones disponibles
+        for(Habitacion aux: habitaciones){
+            if(aux.getPiso() == piso && aux.getLetra()==letra){
+                return aux;
+            }
+        }
+        return null;
+    }
 
-        Reserva aCobrar = hotel.retornaReservadelPasajero(dni);
+    public double terminaReserva(Reserva aCobrar){
 
         double total=0;
 

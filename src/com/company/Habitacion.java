@@ -9,7 +9,7 @@ public class Habitacion {
     private int piso;
     private char letra;
     private double precio;
-    private ArrayList<Producto> listaProductos = new ArrayList<>();
+    private ArrayList<Producto> frigobar = new ArrayList<>();
     private EstadoHabitacion estadoHabitacion;
 
 
@@ -45,12 +45,12 @@ public class Habitacion {
         this.precio = precio;
     }
 
-    //--------------- Lista de productos ---------------
-    public ArrayList<Producto> getListaProductos() {
-        return listaProductos;
+    //--------------- Frigobar ---------------
+    public ArrayList<Producto> getFrigobar() {
+        return frigobar;
     }
-    public void setListaProductos(ArrayList<Producto> listaProductos) {
-        this.listaProductos = listaProductos;
+    public void setFrigobar(ArrayList<Producto> frigobar) {
+        this.frigobar = frigobar;
     }
 
     //--------------- Estado de la Habitacion ---------------
@@ -93,7 +93,7 @@ public class Habitacion {
                 ", piso=" + piso +
                 ", letra=" + letra +
                 ", precio=" + precio +
-                ", listaProductos=" + listaProductos +
+                ", frigobar=" + frigobar +
                 ", estadoHabitacion=" + estadoHabitacion +
                 '}';
     }
