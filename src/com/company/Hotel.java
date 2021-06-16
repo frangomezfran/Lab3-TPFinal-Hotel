@@ -1,6 +1,8 @@
 package com.company;
 
 import com.company.Personal.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -114,6 +116,15 @@ public class Hotel {
         return null; //Por x razon si no existe...
     }
 
+    public Reserva retornaReservaPorCheckIn(LocalDate fecha){
+
+        for(Reserva aux : listaReservas){
+            if(aux.getCheckIn().toLocalDate().equals(fecha))
+                return aux;
+        }
+        return null;
+    }
+
     public Reserva retornaReservaVigentedelPasajero(long dni){
 
         for(Reserva aux : this.listaReservas){
@@ -123,8 +134,6 @@ public class Hotel {
         }
         return null; //Por x razon si no existe...
     }
-
-
 
     public boolean agregaNuevoPasajero (Pasajero pasajero){
 
@@ -137,17 +146,6 @@ public class Hotel {
         return true;
     }
 
-    public void actualizaHabitacionesPorCheckOut(){ //Administrador?
-
-        for(Reserva aux : listaReservas){
-            if(aux.getHabitacion().getEstadoHabitacion() == EstadoHabitacion.RESERVADA
-                    && aux.getCheckOut().isAfter(LocalDateTime.now())) {
-                aux.getHabitacion().setEstadoHabitacion(EstadoHabitacion.DISPONIBLE);
-                //Hay que llenar la lista de productos de la habitacion tmb
-            }
-        }
-    }
-
     public Habitacion retornaHabitacion(char piso,int letra){
         for(Habitacion aux: listaHabitaciones){
             if(aux.getPiso() == piso && aux.getLetra()==letra){
@@ -157,8 +155,6 @@ public class Hotel {
         return null;
     }
 
-
-
     public Pasajero retornaPasajero(long dni){
 
         for(Pasajero aux: listaPasajeros){
@@ -167,6 +163,34 @@ public class Hotel {
             }
         }
         return null;
+    }
+
+    public ArrayList<Reserva> retornaListaReservasVigentes(){
+
+        ArrayList<Reserva> reservasVigentes = new ArrayList<>();
+
+        for(Reserva aux : listaReservas){
+
+            if(LocalDateTime.now().isBefore(aux.getCheckOut())){
+                reservasVigentes.add(aux);
+            }
+        }
+
+        return reservasVigentes;
+    }
+
+    public ArrayList<Reserva> retornaListaReservasNoVigentes(){
+
+        ArrayList<Reserva> reservasNoVigentes = new ArrayList<>();
+
+        for(Reserva aux : listaReservas){
+
+            if( (LocalDateTime.now().isAfter(aux.getCheckOut())) ){
+                reservasNoVigentes.add(aux);
+            }
+        }
+
+        return reservasNoVigentes;
     }
 
 

@@ -51,17 +51,6 @@ public class Pasajero extends Persona{
 
 
     //--------------Metodos--------------
-    public void solicitarUnProducto(String nombreProducto, List<Producto>producto)
-    {
-        for (Producto productoActual: producto) {
-            if(productoActual.getNombre().equals(nombreProducto) && productoActual.getStock()>0)
-            {
-                //aca se pondria que se consumio el producto
-            }
-
-        }
-    }
-
     public  String obtenerFeedback()
     {
         System.out.println("si usted desea dejenos su opinion acerca de como se sintio en nuestro establecimiento");

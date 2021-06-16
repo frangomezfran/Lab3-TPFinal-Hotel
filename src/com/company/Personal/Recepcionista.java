@@ -211,23 +211,21 @@ public class Recepcionista extends Persona{
 
     }
 
-    public String checkearCheckOutsDia(Hotel hotel){
+    public ArrayList<Reserva> checkearCheckOutsDia(Hotel hotel){
 
-        String reservasQueFinalizanHoy = "Habitaciones de reservas que finalizan hoy: ("+LocalDate.now()+")\n";
-        int i = 1;
+        ArrayList<Reserva> reservasHoyCheckouts = new ArrayList<>();
 
-        for(Reserva aux : hotel.getListaReservas()){
+        for(Reserva aux : hotel.retornaListaReservasVigentes()){
 
             if(aux.getCheckOut().toLocalDate().equals(LocalDate.now())){
 
-                reservasQueFinalizanHoy += i+") Piso: "+aux.getHabitacion().getPiso()+" | Letra: "+aux.getHabitacion().getLetra();
-                i++;
+                reservasHoyCheckouts.add(aux);
 
             }
 
         }
 
-        return reservasQueFinalizanHoy;
+        return reservasHoyCheckouts;
 
     }
 
@@ -241,16 +239,20 @@ public class Recepcionista extends Persona{
         return null;
     }
 
-    public double terminaReserva(Reserva aCobrar){
+    public double terminaReserva(Reserva aCobrar,String opinion){
 
         double total=0;
 
         if(LocalDateTime.now().isBefore(aCobrar.getCheckOut())){
             total = aCobrar.gastoTotal();
         }else{
-            //Si se va despues del checkOut, se cobra un dia mas
-            total = aCobrar.gastoTotal() + aCobrar.getHabitacion().getPrecio();
+            //Si se va despues del checkOut, se cobra un dia y medio mas
+            total = aCobrar.gastoTotal() + (aCobrar.getHabitacion().getPrecio()/2);
         }
+
+        aCobrar.getHabitacion().setEstadoHabitacion(EstadoHabitacion.DISPONIBLE);
+        aCobrar.setMonto(total);
+        aCobrar.setOpinion(opinion);
         //Decirle al pasajero que escriba una opinion
 
         return total;
@@ -298,6 +300,13 @@ public class Recepcionista extends Persona{
         if(pasajero.getFormaDePago().equals(medioDePago))
             pasajero.setFormaDePago(medioDePago);
 
+    }
+
+    public void verReservas(ArrayList<Reserva> reservas){
+
+        for(Reserva aux : reservas){
+            System.out.println(aux.toString());
+        }
     }
 
     @Override

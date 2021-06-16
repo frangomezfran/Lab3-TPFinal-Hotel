@@ -2,25 +2,19 @@ package com.company;
 
 import com.company.Personal.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.net.Socket;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 
 public class Menu {
 
     private Scanner input = new Scanner(System.in);
+    //Cuando tengo problemas con el Scanner uso este
 
-    //private Scanner input2 = new Scanner(Syste);
 
     public Menu(){}
 
@@ -80,6 +74,40 @@ public class Menu {
             }
             return fecha;
         }catch (DateTimeParseException e){
+            System.out.println("Fecha invalida, Intente nuevamente : ");
+            return null;
+        }
+    }
+
+    public LocalDate pideFechaPasada(){
+
+        String fechaString = "";
+        LocalDate fecha;
+
+        do {
+            fechaString = this.input.nextLine();
+            fecha=esFechaPasada(fechaString);
+
+        }while(!fechaString.matches("\\d[0-3]\\d[0-9]/\\d[0-1]\\d[0-9]/\\d[2]\\d[0]\\d[2]\\d[1-5]$") &&
+                fecha==null );
+
+        return esFecha(fechaString);
+
+    }
+    public static LocalDate esFechaPasada(String fechaString){ //Solo para fechas futuras
+
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        LocalDate fecha;
+
+        try {
+            fecha  = LocalDate.parse(fechaString, dateFormat);
+            if(fecha.getDayOfMonth() != Integer.parseInt(fechaString.substring(0,2))){
+                System.out.print("Ingreso mal la fecha, Intente nuevamente : ");
+                return null;
+            }
+            return fecha;
+        }catch (DateTimeParseException e){
             System.out.println("Ingreso mal la fecha, Intente nuevamente : ");
             return null;
         }
@@ -123,25 +151,10 @@ public class Menu {
         return inputChar;
     }
 
-
-    public boolean validaOpcionConSizeArraylist(int opcion , int size){
-
-        if(opcion < size && opcion > -1){
-            return true;
-        }
-        return false;
-
-    }
-
-    public String pideContrasenia(){
-
-        String contrasenia="";
-
-        contrasenia=input.nextLine();
-
-
-        return contrasenia;
-
+    public void enterParaContinuar(){
+        System.out.println("Enter para continuar");
+        input.reset();
+        input.nextLine();
     }
 
 
@@ -176,39 +189,12 @@ public class Menu {
 
     }
 
-    public Recepcionista eligeGestionadorSistema(Hotel hotel){
-
-       int i = 0;
-
-       clearScreen();
-
-        System.out.println("\nSeleccione el Recepcionista que gestiona el sistema: \n");
-
-        for(Recepcionista gestionador : hotel.getListaEmpleados()){
-
-            System.out.println(i+") "+gestionador.getNombre()+" "+gestionador.getApellido());
-            i++;
-        }
-
-        do{
-            i=pideEntero();
-
-        }while( !validaOpcionConSizeArraylist( i , hotel.getListaEmpleados().size() ) );
-
-        System.out.println("Usted es "+hotel.getListaEmpleados().get(i).getNombre());
-
-        return hotel.getListaEmpleados().get(i);
-
-    }
-
-    public void muestraHabitaciones(ArrayList<Habitacion> habitaciones){
+    public void muestraHabitaciones(ArrayList<Habitacion> habitaciones){//Cambiar de clase
 
         for(Habitacion auxHabitacion : habitaciones){
             System.out.println(auxHabitacion.muestraHabitacion());
         }
     }
-
-
 
     public static void clearScreen() {
         System.out.print("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n" +
@@ -237,9 +223,302 @@ public class Menu {
 
     }
 
+    public void menuReservas(Hotel hotel, Recepcionista gestionador){
+
+        int opcion=0;
+        long auxDni=0;
+
+        do {
+
+            clearScreen();
+            System.out.println("Reservas :\n\n1- Crear Reserva\n2- Terminar Reserva\n3- Ver Reserva\n4- Modificar Reserva\n0- Volver");
+
+            switch (opcion=pideEntero()) {
+
+                case (1)://Crear
+                    clearScreen();
+
+                    System.out.print("Creando una reserva: \n\n" +
+                            "Ingrese cantidad de Personas a hospedarse: ");
+                    int cantPersonas = pideEntero();
+                    System.out.print("Ingrese la Fecha del posible CheckIn (MM/DD/YYYY) : ");
+                    LocalDate fecha = pideFecha();
+                    System.out.print("Ingrese la cantidad de Dias a hospedarse : ");
+                    int cantDiasHospedarse = pideEntero();
+
+                    clearScreen();
+
+                    System.out.println("Check-In: " + fecha + " | Cant Personas: " + cantPersonas + " | Check-Out: " + fecha.plusDays(cantDiasHospedarse) + "\n\n\nHabitaciones disponibles para el nuevo pasajero: \n");
+
+                    ArrayList<Habitacion> auxHabitacionesDisponibles = gestionador.retornaHabitacionesDisponibles(hotel, cantPersonas, fecha, cantDiasHospedarse);
+                    muestraHabitaciones(auxHabitacionesDisponibles);
+
+                    System.out.println("\nCreamos la reserva ?\n1- Si\n2- No");
+                    switch (pideEntero()) {
+                        case (1)://Creamos la reserva
+                            clearScreen();
+                            int piso;
+                            char letra;
+                            Habitacion habitacionAReservar;
+                            opcion = 1;
+                            do {
+                                System.out.print("Ingrese Piso y Letra de la habitacion a reservar: \n\nPiso: ");
+                                piso = pideEntero();
+                                System.out.print("Letra: ");
+                                letra = pideChar();
+                                habitacionAReservar = gestionador.retornaHabitacionDeUnaLista(letra, piso, auxHabitacionesDisponibles);
+                                if (habitacionAReservar == null) {
+                                    System.out.println("\nLa habitacion ingresada no es valida, ENTER para intentar de nuevo");
+                                    input.nextLine();
+                                    clearScreen();
+                                }
+                            } while (habitacionAReservar == null);
+
+                            System.out.print("\nIngrese Dni del Pasajero: ");
+                            auxDni = pideLong();
+
+                            Pasajero pasajero = hotel.retornaPasajero(auxDni);
+
+                            clearScreen();
+
+                            if (pasajero == null) {
+
+                                System.out.println("El pasajero debe ser creado :");
+                                System.out.print("\nIngrese el Nombre del nuevo Pasajero: ");
+                                String auxNombre = input.nextLine();
+                                //El hijo de elon musk se llama "X Æ a XII" Musk, permito caracteres extraños
+                                System.out.print("Ingrese el Apellido del Pasajero: ");
+                                String auxApellido = input.nextLine();
+                                System.out.print("Ingrese el Pais de origen del Pasajero: ");
+                                String auxPais = input.nextLine();
+                                System.out.print("Ingrese el Domicilio del Pasajero: ");
+                                String auxDomicilio = input.nextLine();
+                                System.out.println("Ingrese el Medio de pago del Pasajero: \n1- Credito\n2- Debito\n3- Efectivo-Dolar\n4- Efectivo-PesoArgentino");
+                                MedioDePago auxMedioDePago = MedioDePago.DEBITO;//Solo es para inicializar
+                                do {
+                                    switch (opcion = pideEntero()) {
+                                        case (1):
+                                            auxMedioDePago = MedioDePago.CREDITO;
+                                            break;
+                                        case (2):
+                                            auxMedioDePago = MedioDePago.DEBITO;
+                                            break;
+                                        case (3):
+                                            auxMedioDePago = MedioDePago.EFECTIVO_DOLAR;
+                                            break;
+                                        case (4):
+                                            auxMedioDePago = MedioDePago.EFECTIVO_PESOARGENTINO;
+                                            break;
+                                        default:
+                                            System.out.println("Numero mal ingresado, intente nuevamente");
+                                            break;
+                                    }
+
+                                } while (opcion < 1 || opcion > 4);
+
+                                pasajero = gestionador.crearUnNuevoUsuario(hotel, auxNombre, auxApellido, auxDni, auxPais, auxDomicilio, auxMedioDePago);
+
+                                clearScreen();
+                                System.out.println("El pasajero fue creado Exitosamente");
+
+                            } else {
+                                clearScreen();
+                                System.out.println("El pasajero ya se encuentra en la lista de pasajeros");
+                            }
+
+                            LocalDateTime fechaConHora = fecha.atTime(15, 0);//Momento maximo del check in
+                            gestionador.creaReserva(hotel, habitacionAReservar, fechaConHora, cantDiasHospedarse, pasajero, cantPersonas);
+
+                            System.out.print("Reserva Creada\n");
+                            enterParaContinuar();
+                            break;
+
+                        case (2):// No creamos la reserva
+                            System.out.println("Volviendo al menu principal");
+                            break;
+
+                        default://Numero mal ingresado
+                            System.out.println("Intentelo nuevamente");
+                            break;
+
+                    }
+
+                    opcion=1;
+
+                    break;
+
+                case (2)://Terminar Reserva
+
+                    Reserva auxReserva;
+                    opcion = 1;
+                    do {
+                        clearScreen();
+                        System.out.print("Terminar Reserva : \n\nIngrese DNI del Pasajero dueño de la reserva : ");
+                        auxDni = pideLong();
+                        auxReserva = hotel.retornaReservaVigentedelPasajero(auxDni);
+                        if (auxReserva == null) {
+                            System.out.println("\nNo se encontró la reserva: \n1- Intentarlo nuevamente \n0- Salir");
+                            opcion = pideEntero();
+                        }
+                    } while (opcion != 0 && auxReserva == null);
+
+                    if (opcion != 0) {
+                        System.out.println("\nReserva encontrada ");
+                        System.out.println("\nEl pasajero desea dar una opinion de su hospedaje ?\n1- Si\n2- No");
+                        String opinion = "";
+                        if (pideEntero() == 1) {
+                            System.out.println("Escriba la opinion del Pasajero :");
+                            opinion = input.nextLine();
+                        }
+
+                        double montoTotal = gestionador.terminaReserva(auxReserva, opinion);
+
+                        if (montoTotal != auxReserva.getHabitacion().getPrecio() * auxReserva.getCantDiasReserva()) {
+                            System.out.println("Se le cobrará medio dia mas en la habitacion por hacer el Check-out fuera del horario");
+                        }
+
+                        System.out.println("\n" + auxReserva.getHabitacion().muestraHabitacion());
+                        System.out.println("\nEl monto total que debe pagar es de : " + montoTotal + "$");
+                        enterParaContinuar();
+                    }
+                    opcion=1;
+                    break;
+
+                case (3)://Ver Reserva
+
+                    do {
+                        clearScreen();
+                        System.out.println("Ver Reservas : \n\n1- Todas las reservas\n2- Reserva en particular\n0- Salir");
+                        Reserva aVer;
+                        switch (opcion = pideEntero()) {
+                            case (1)://Todas las reservas
+                                clearScreen();
+                                System.out.println("Todas las reservas :\n\n1- Vigentes\n2- No Vigentes");
+                                switch (pideEntero()) {
+                                    case (1):
+                                        clearScreen();
+                                        System.out.println("Reservas Vigentes :");
+                                        gestionador.verReservas(hotel.retornaListaReservasVigentes());
+                                        enterParaContinuar();
+                                        break;
+                                    case (2):
+                                        clearScreen();
+                                        System.out.println("Reservas NO Vigentes :");
+                                        gestionador.verReservas(hotel.retornaListaReservasNoVigentes());
+                                        enterParaContinuar();
+                                        break;
+                                    default:
+                                        System.out.println("Opcion mal ingresada");
+                                }
+
+                                break;
+                            case (2)://Reserva en particular
+                                clearScreen();
+                                System.out.println("Buscar la reserva a ver por :\n\n1- Dni Pasajero\n2- Check-in\n0- Salir");
+                                switch (pideEntero()) {
+
+                                    case (1):// Buscar Reserva por DNI
+                                        clearScreen();
+                                        opcion = 1;
+                                        do {
+                                            System.out.print("\nIngrese Dni del Pasajero de la Reserva a Ver : ");
+                                            aVer = hotel.retornaReservadelPasajero(pideLong());
+                                            if (aVer == null) {
+                                                System.out.println("\nEl dni ingresado NO es correcto :\n1- Intentar de nuevo\n0- Salir");
+                                                opcion = pideEntero();
+                                            }
+                                        } while (aVer == null && opcion != 0);
+
+                                        if (opcion != 0) {//me voy atras
+                                            System.out.println(aVer.toString());
+
+                                            enterParaContinuar();
+                                        }
+                                        break;
+
+                                    case (2):// Buscar Reserva por Check-in
+                                        clearScreen();
+                                        opcion = 1;
+                                        do {
+                                            System.out.print("\nIngrese Check-In de la Reserva : ");
+                                            aVer = hotel.retornaReservaPorCheckIn(pideFechaPasada());//Necesito usar este metodo
+                                            if (aVer == null) {
+                                                System.out.println("La fecha ingresada NO es correcta :\n1- Intentar de nuevo\n0- Salir");
+                                                opcion = pideEntero();
+                                            }
+                                        } while (aVer == null && opcion != 0);
+
+                                        if (opcion != 0) {//me voy atras
+                                            System.out.println(aVer.toString());
+
+                                            enterParaContinuar();
+                                        }
+                                        break;
+
+                                    case (0)://Volver
+                                        break;
+
+                                    default:
+                                        System.out.println("Opcion mal ingresada, Intente nuevamente");
+                                        break;
+
+                                }
+
+                                break;
+
+                            case (0)://Salir
+                                break;
+
+                            default:
+                                System.out.println("Intentelo nuevamente");
+                                break;
+                        }
+                    } while (opcion != 0);
+
+                    opcion=1;
+
+                    break;
+
+                case (4)://Modificar Reserva
+
+                    Reserva aModificar;
+                    clearScreen();
+                    do {
+                        System.out.print("Ingrese Dni del Pasajero de la Reserva: ");
+                        aModificar = hotel.retornaReservaVigentedelPasajero(pideLong());
+                        if (aModificar == null) {
+                            System.out.println("\nEl dni ingresado NO es correcto :\n1- Intentar de nuevo\n0- Salir");
+                            opcion = pideEntero();
+                            clearScreen();
+                        }
+                    } while (aModificar == null && opcion != 0);
+
+                    if (opcion == 0) {//Me voy al menu principal
+                        break;
+                    }
+
+                    menuModificarReserva(aModificar, gestionador, hotel);
+
+                    opcion=1;
+
+                    break;
+
+
+                case(0):
+                    break;
+
+                default:
+                    opcion=1;
+                    break;
+            }
+
+        }while (opcion!=0);
+    }
+
     public void menuPrincipal(Hotel hotel,Recepcionista gestionador){
 
         int opcion=0;
+        long auxDni=0;
 
         do {
             //En algun momento cuando el pasajero este en la habitacion, el estado de la habitacion tiene q estar Reservada,
@@ -255,203 +534,26 @@ public class Menu {
 
             System.out.println("0- Cerrar Sesion");
 
-            switch (opcionMenuPrincipal(gestionador,5)){
+            switch (opcionMenuPrincipal(gestionador,4)){
 
                 case(1)://Ver Check-outs de hoy
 
-                    clearScreen();
-                    System.out.println("Reservas :\n1- Crear Reserva\n2- Terminar Reserva\n3- Ver Reserva\n4- Modificar Reserva\n0- Volver");
-
-                    switch (pideEntero()){
-
-                        case (1)://Crear
-                            clearScreen();
-
-                            System.out.print("Creando una reserva: \n\n" +
-                                    "Ingrese cantidad de Personas a hospedarse: ");
-                            int cantPersonas = pideEntero();
-                            System.out.print("Ingrese la Fecha del posible CheckIn (MM/DD/YYYY) : ");
-                            LocalDate fecha = pideFecha();
-                            System.out.print("Ingrese la cantidad de Dias a hospedarse : ");
-                            int cantDiasHospedarse = pideEntero();
-
-                            clearScreen();
-
-                            System.out.println("Check-In: "+fecha+" | Cant Personas: "+cantPersonas+" | Check-Out: "+fecha.plusDays(cantDiasHospedarse)+"\n\n\nHabitaciones disponibles para el nuevo pasajero: \n");
-
-                            ArrayList<Habitacion> auxHabitacionesDisponibles = gestionador.retornaHabitacionesDisponibles(hotel,cantPersonas,fecha,cantDiasHospedarse);
-                            muestraHabitaciones( auxHabitacionesDisponibles );
-
-                            System.out.println("\nCreamos la reserva ?\n1- Si\n2- No");
-                            switch (pideEntero()) {
-                                case (1):
-                                    clearScreen();
-                                    int piso;
-                                    char letra;
-                                    Habitacion habitacionAReservar;
-                                    do {
-                                        System.out.print("Ingrese Piso y Letra de la habitacion a reservar: \n\nPiso: ");
-                                        piso = pideEntero();
-                                        System.out.print("Letra: ");
-                                        letra = pideChar();
-                                        habitacionAReservar = gestionador.retornaHabitacionDeUnaLista(letra,piso,auxHabitacionesDisponibles);
-                                    }while (habitacionAReservar==null);
-
-                                    System.out.print("\nIngrese Dni de un Pasajero: ");
-                                    long auxDni = pideLong();
-
-                                    Pasajero pasajero = hotel.retornaPasajero(auxDni);
-
-                                    clearScreen();
-
-                                    if(pasajero==null){
-
-                                        System.out.println("El pasajero debe ser creado :");
-                                        System.out.print("\nIngrese el Nombre del nuevo Pasajero: ");
-                                        String auxNombre = input.nextLine();
-                                        //El hijo de elon musk se llama "X Æ a XII" Musk, permito caracteres extraños
-                                        System.out.print("Ingrese el Apellido del Pasajero: ");
-                                        String auxApellido = input.nextLine();
-                                        System.out.print("Ingrese el Pais de origen del Pasajero: ");
-                                        String auxPais = input.nextLine();
-                                        System.out.print("Ingrese el Domicilio del Pasajero: ");
-                                        String auxDomicilio=input.nextLine();
-                                        System.out.println("Ingrese el Medio de pago del Pasajero: \n1- Credito\n2- Debito\n3- Efectivo-Dolar\n4- Efectivo-PesoArgentino");
-                                        MedioDePago auxMedioDePago = MedioDePago.DEBITO ;//Solo es para inicializar
-                                        do{
-                                            switch (opcion=pideEntero()) {
-                                                case (1):
-                                                    auxMedioDePago = MedioDePago.CREDITO;
-                                                    break;
-                                                case (2):
-                                                    auxMedioDePago = MedioDePago.DEBITO;
-                                                    break;
-                                                case (3):
-                                                    auxMedioDePago = MedioDePago.EFECTIVO_DOLAR;
-                                                    break;
-                                                case (4):
-                                                    auxMedioDePago = MedioDePago.EFECTIVO_PESOARGENTINO;
-                                                    break;
-                                                default:
-                                                    System.out.println("Numero mal ingresado, intente nuevamente");
-                                                    break;
-                                            }
-
-                                        }while (opcion<1 || opcion>4);
-
-                                        pasajero = gestionador.crearUnNuevoUsuario(hotel,auxNombre,auxApellido,auxDni,auxPais,auxDomicilio,auxMedioDePago);
-
-                                        System.out.println("El pasajero fue creado Exitosamente");
-
-                                    }else {
-                                        System.out.println("El pasajero ya se encuentra en la lista de pasajeros");
-                                    }
-
-                                    LocalDateTime fechaConHora = fecha.atTime(14,0);//Momento del check in
-                                    gestionador.creaReserva(hotel,habitacionAReservar,fechaConHora,cantDiasHospedarse,pasajero,cantPersonas);
-
-                                    System.out.println("Reserva Creada");
-                                    break;
-
-                                case (2):// No creamos la reserva
-                                    System.out.println("Volviendo al menu principal");
-                                    break;
-
-                                default://Numero mal ingresado
-                                    System.out.println("Intentelo nuevamente");
-                                    break;
-
-                            }
-
-                            break;
-
-                        case (2)://Terminar
-
-                            Reserva auxReserva;
-                            long auxDni=0;
-                            do {
-                                clearScreen();
-                                System.out.print("Terminar Reserva : \nIngrese DNI del Pasajero dueño de la reserva : ");
-                                auxDni = pideLong();
-                                auxReserva = hotel.retornaReservaVigentedelPasajero(auxDni);
-                                if (auxReserva == null) {
-                                    System.out.println("No se encontró la reserva: \n1- Intentarlo nuevamente \n0- Salir");
-                                    //Si ingresas cualquier numero diferente al 0, se intenta nuevamente
-                                    auxDni=pideLong();
-                                }
-                            }while(auxDni!=0 && auxReserva==null);
-
-                            if(auxDni!=0) {
-                                System.out.println("El monto total que debe pagar es de : "+gestionador.terminaReserva(auxReserva)+"$");
-                                System.out.println(auxReserva.getHabitacion().muestraHabitacion());
-                                System.out.println("Productos Consumidos :\n"+auxReserva.muestraListaProductosConsumidos());
-
-
-                                gestionador.terminaReserva(auxReserva);
-                            }
-                            break;
-
-                        case(3)://Ver
-                            break;
-
-                        case(4)://Modificar
-                            break;
-                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case(2)://Termina reserva
-
-                    //gestionador.terminaReserva(hotel);
-
+                    gestionador.verReservas(gestionador.checkearCheckOutsDia(hotel));
+                    enterParaContinuar();
                     break;
 
-                case(3)://Modifica-Ver Reservas Vigentes
+                case(2)://Reservas
 
-                    long auxDni;
-                    Reserva aModificar;
-                    clearScreen();
-                    do {
-                        System.out.print("\nBuscando la reserva a ver/modificar  (0 para salir) \n\nIngrese Dni del Pasajero de la Reserva: ");
-                        auxDni=pideLong();
-                        System.out.println(auxDni);
-                        aModificar = hotel.retornaReservaVigentedelPasajero(auxDni);
-                        if(aModificar==null && auxDni!=0 ){
-                            System.out.println("El dni ingresado no es correcto");
-                        }
-                    }while(aModificar==null && auxDni!=0);
-
-                    if(auxDni==0){//Me voy al menu principal
-                        break;
-                    }
-
-                    menuModificarReserva(aModificar,gestionador,hotel);
-
-
+                    menuReservas(hotel,gestionador);
                     break;
 
-                case(4)://Modificar un Pasajero
+                case(3)://Habitaciones
+
+
+
+                case(4)://Pasajeros
+
+                    //Modificar un Pasajero
 
                     Pasajero pasajeroAModificar=null;
                     long dniAux=0;
@@ -473,23 +575,12 @@ public class Menu {
                     menuModificarUsuario(pasajeroAModificar,gestionador);
                     break;
 
-                case(5)://Ver precios de las habitaciones
+                case(5)://Empleados - Administrador
                     break;
 
-                case(6)://Ver habitaciones disponibles para hoy
+                case(0):
                     break;
 
-                case(7)://Ver Check-Outs para Hoy
-                    break;
-
-                case(8)://Actualizar lista de productos de una habitacion q esta ocupada
-                    break;
-
-                case(9)://Modificar estado de una habitacion
-                    break;
-
-                case(10):
-                    break;
 
                 default:
                     System.out.print("Opcion mal ingresada, Intentelo nuevamente : ");
@@ -550,22 +641,6 @@ public class Menu {
                     break;
                 case (3):
                     //Modularizar
-
-                    int eliminarOpcion = 0;
-                    do {
-                        aModificar.muestraListaProductosConsumidos();
-                        System.out.println("Ingrese el nombre del producto a eliminar: ");
-                        if (aModificar.eliminaProductoConsumido(input.nextLine())) {//Tengo que validar esto ?
-                            System.out.println("Producto eliminado correctamente");
-                        } else {
-                            System.out.println("Error al eliminar");
-                        }
-                        //Si por x motivo se ingresa mal el nombre
-                        System.out.println("1-Eliminar otro Producto\n0-Salir");
-                        eliminarOpcion = pideEntero();
-                    } while (eliminarOpcion == 1);
-                    break;
-
 
                 case (4)://Aca se modifica CheckIn
 
