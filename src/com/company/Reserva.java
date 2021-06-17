@@ -2,11 +2,10 @@ package com.company;
 
 import com.company.Personal.Pasajero;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+
 
 public class Reserva {
 
@@ -118,6 +117,8 @@ public class Reserva {
         }
 
     }
+
+
 
     @Override
     public String toString() {

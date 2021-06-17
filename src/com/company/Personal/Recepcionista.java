@@ -4,22 +4,19 @@ import com.company.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Recepcionista extends Persona{
 
     private double sueldo;
-    private String turno;
     private String contrasenia;
 
     //--------------- Constructor ---------------
-    public Recepcionista(String nombre, String apellido, long dni,double sueldo,String turno,String contrasenia) {
+    public Recepcionista(String nombre, String apellido, long dni,double sueldo,String contrasenia) {
         super(nombre, apellido, dni);
         this.sueldo=sueldo;
-        this.turno=turno;
         this.contrasenia=contrasenia;
     }
 
@@ -29,14 +26,6 @@ public class Recepcionista extends Persona{
     }
     public void setSueldo(double sueldo) {
         this.sueldo = sueldo;
-    }
-
-    //--------------- Turno ---------------
-    public String getTurno() {
-        return turno;
-    }
-    public void setTurno(String turno) {
-        this.turno = turno;
     }
 
     //--------------- Contraseña ---------------
@@ -78,13 +67,13 @@ public class Recepcionista extends Persona{
 
     }
 
-    public ArrayList<Habitacion> habitacionesNoDisponiblesPorCantDePersonas(Hotel hotel,int cantPersonas){
+    public ArrayList<Habitacion> habitacionesNoDisponiblesPorCantDePersonasyEstado(Hotel hotel,int cantPersonas){
 
         ArrayList<Habitacion> habitacionesNoDisponibles = new ArrayList<>();
 
         for (Habitacion aux : hotel.getListaHabitaciones()){
 
-            if( aux.getTipoHabitacion().getCantPersonas() < cantPersonas){
+            if( aux.getTipoHabitacion().getCantPersonas() < cantPersonas || !aux.getEstadoHabitacion().equals(EstadoHabitacion.DISPONIBLE) ){
 
                 habitacionesNoDisponibles.add(aux);
 
@@ -101,7 +90,7 @@ public class Recepcionista extends Persona{
         //Creo un arreglo de fechas de los dias del nuevo pasajero
         LocalDate[] nuevoPasajero = creaArraydeFechas(fecha,cantDias);
 
-        ArrayList<Habitacion> habitacionesNoDisponibles = habitacionesNoDisponiblesPorCantDePersonas(hotel,cantPersonas);
+        ArrayList<Habitacion> habitacionesNoDisponibles = habitacionesNoDisponiblesPorCantDePersonasyEstado(hotel,cantPersonas);
 
         //Utilizo este flag para dejar de buscar cuando se encuentra una habitacion ocupada
         boolean flag = false;
@@ -201,9 +190,9 @@ public class Recepcionista extends Persona{
     }
 
     public Pasajero crearUnNuevoUsuario(Hotel hotel,String nombre,String apellido,long dni,
-                                    String paisDeOrigen,String domicilio,MedioDePago medioDePago)//creo al pasajero
+                                    String paisDeOrigen,String domicilio)//creo al pasajero
     {
-       Pasajero pasajero = new Pasajero(nombre,apellido,dni,paisDeOrigen,domicilio,medioDePago);
+       Pasajero pasajero = new Pasajero(nombre,apellido,dni,paisDeOrigen,domicilio);
 
        hotel.agregaNuevoPasajero(pasajero);
 
@@ -239,9 +228,23 @@ public class Recepcionista extends Persona{
         return null;
     }
 
+    public int diferenciaEntreDiaS(LocalDateTime fechaMayor,LocalDateTime fechaMenor) {
+
+        LocalDateTime tempDateTime = LocalDateTime.from( fechaMenor );
+
+        return (int) tempDateTime.until( fechaMayor , ChronoUnit.DAYS)+1;
+    }
+
     public double terminaReserva(Reserva aCobrar,String opinion){
 
         double total=0;
+
+        //Si el pasajero se va antes de los dias pautados, debo modificar la cantDeDias de hospedaje
+        if(aCobrar.getCantDiasReserva()>(diferenciaEntreDiaS(LocalDateTime.now(),aCobrar.getCheckIn()))){
+
+            aCobrar.setCheckOut(LocalDateTime.now().withHour(12).withMinute(0));
+
+        }
 
         if(LocalDateTime.now().isBefore(aCobrar.getCheckOut())){
             total = aCobrar.gastoTotal();
@@ -279,8 +282,7 @@ public class Recepcionista extends Persona{
 
     }
 
-    public void modificaPasajero(Pasajero pasajero, String nombre, String apellido, String pais,String domicilio,
-                                    long dni,MedioDePago medioDePago){
+    public void modificaPasajero(Pasajero pasajero, String nombre, String apellido, String pais,String domicilio,long dni){
 
         if(!pasajero.getNombre().equals(nombre))
             pasajero.setNombre(nombre);
@@ -297,9 +299,13 @@ public class Recepcionista extends Persona{
         if(pasajero.getDni()!=dni)
             pasajero.setDni(dni);
 
-        if(pasajero.getFormaDePago().equals(medioDePago))
-            pasajero.setFormaDePago(medioDePago);
+    }
 
+    public void verPasajeros(ArrayList<Pasajero> pasajeros){
+
+        for (Pasajero aux : pasajeros){
+            System.out.println(aux.toString());
+        }
     }
 
     public void verReservas(ArrayList<Reserva> reservas){
@@ -309,18 +315,18 @@ public class Recepcionista extends Persona{
         }
     }
 
+    public void modificaEstadoHabitacion(EstadoHabitacion estadoHabitacion,Habitacion habitacion){
+
+        habitacion.setEstadoHabitacion(estadoHabitacion);
+
+    }
+
     @Override
     public String toString() {
-
-
-        return  "Empleado{" +
-                "nombre='" + getNombre() + '\n' +
-                "apellido='" + getApellido() + '\n' +
-                "dni='" + getDni() + '\n' +
-                "sueldo=" + sueldo +
-                ", turno='" + turno + '\n' +
-                '}';
-
+        return  "\nRecepcionista :\n" +
+                "Nombre: "+getNombre()+" | Apellido: "+getApellido()+"\n" +
+                "DNI: "+getDni()+" | Sueldo: "+getSueldo()+"\n" +
+                "Contrasenia: "+getContrasenia();
 
     }
 

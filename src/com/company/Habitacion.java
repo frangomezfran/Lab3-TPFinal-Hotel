@@ -1,8 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-
 public class Habitacion {
 
     private TipoHabitacion tipoHabitacion;
@@ -63,13 +60,6 @@ public class Habitacion {
 
     //--------------- Metodos ---------------
 
-    //establecer precio segun el tipo de habitacion que sea
-
-    public void establecerPrecio(TipoHabitacion tipoHabitacion,double precio)
-    {
-
-    }
-
     public String muestraHabitacion(){
 
         return "[ Tipo: "+tipoHabitacion.getTipo()+" | CantMax de Personas: "+tipoHabitacion.getCantPersonas()+" | Piso: "+getPiso()+" | Letra: "+getLetra()+" | " +
@@ -79,12 +69,7 @@ public class Habitacion {
 
     @Override
     public String toString() {
-        return "Habitacion{" +
-                " Tipo=" + tipoHabitacion.getTipo() +
-                ", piso=" + piso +
-                ", letra=" + letra +
-                ", precio=" + precio +
-                ", estadoHabitacion=" + estadoHabitacion +
-                '}';
+        return "[ Tipo: "+tipoHabitacion.getTipo()+" | CantMax de Personas: "+tipoHabitacion.getCantPersonas()+" | Piso: "+getPiso()+" | Letra: "+getLetra()+" | " +
+                "Precio: "+getPrecio()+" | Estado: "+estadoHabitacion+" ]";
     }
 }

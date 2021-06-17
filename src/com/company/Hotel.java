@@ -5,6 +5,8 @@ import com.company.Personal.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Hotel {
     private String nombreHotel;
@@ -95,16 +97,21 @@ public class Hotel {
         this.listaEmpleados.add(0,empleado);
     }
 
-    public String historialDeUnPasajero (long dni){
+    public ArrayList<Reserva> historialDeUnPasajero (long dni){
 
-        String reservasDeUnPasajero = "Reservas del Pasajero con DNI : "+dni+"\n";
+        ArrayList<Reserva> reservasDeUnPasajero = new ArrayList<>();
 
         for(Reserva aux : listaReservas){
             if(aux.getPasajero().getDni() == dni)
-                reservasDeUnPasajero += aux.toString() + "\n";
+                reservasDeUnPasajero.add(aux);
         }
 
-        return reservasDeUnPasajero;
+        if(reservasDeUnPasajero.isEmpty()){
+            return null;
+        }else {
+            return reservasDeUnPasajero;
+        }
+
     }
 
     public Reserva retornaReservadelPasajero(long dni){
@@ -146,7 +153,7 @@ public class Hotel {
         return true;
     }
 
-    public Habitacion retornaHabitacion(char piso,int letra){
+    public Habitacion retornaHabitacion(int piso,char letra){
         for(Habitacion aux: listaHabitaciones){
             if(aux.getPiso() == piso && aux.getLetra()==letra){
                 return aux;
@@ -158,6 +165,16 @@ public class Hotel {
     public Pasajero retornaPasajero(long dni){
 
         for(Pasajero aux: listaPasajeros){
+            if(aux.getDni() == dni){
+                return aux;
+            }
+        }
+        return null;
+    }
+
+    public Recepcionista retornaEmpleado(long dni){
+
+        for(Recepcionista aux: listaEmpleados){
             if(aux.getDni() == dni){
                 return aux;
             }
@@ -191,6 +208,24 @@ public class Hotel {
         }
 
         return reservasNoVigentes;
+    }
+
+    public ArrayList<TipoHabitacion> retornaTiposHabitacionesDeUnHotel(){
+
+        ArrayList<TipoHabitacion> tiposHabitacion = new ArrayList<>();
+
+        for (Habitacion aux : listaHabitaciones){
+
+            tiposHabitacion.add(aux.getTipoHabitacion());
+
+        }
+
+        Set<TipoHabitacion> set = new LinkedHashSet<>(tiposHabitacion); //Elimina duplicados y no pierde el orden
+        tiposHabitacion.clear();
+        tiposHabitacion.addAll(set);
+
+        return tiposHabitacion;
+
     }
 
 
