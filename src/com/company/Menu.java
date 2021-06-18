@@ -22,7 +22,7 @@ public class Menu {
         {
             futuroEntero = input.nextLine();
 
-        }while(!esEntero(futuroEntero));
+        }while(!esEntero(futuroEntero) || (Integer.parseInt(futuroEntero) < 0) );
 
         return Integer.parseInt(futuroEntero);
     }

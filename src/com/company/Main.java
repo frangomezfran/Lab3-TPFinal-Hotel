@@ -43,6 +43,8 @@ public class Main {
         Menu menu = new Menu();
 
         Recepcionista gestionador;
+
+
         while(true) {
             gestionador=menu.login(trivago);
             menu.menuPrincipal(trivago, gestionador);

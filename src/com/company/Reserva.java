@@ -9,13 +9,13 @@ import java.time.temporal.ChronoUnit;
 
 public class Reserva {
 
-    private String id; //Podria llegar a generar problemas, pero tengo un registro de el orden de las reservas
+    private String id;
     private Habitacion habitacion;
     private Pasajero pasajero;
     private int cantPersonas;
     private LocalDateTime checkIn;
-    private LocalDateTime checkOut; //Es un atributo para ver el historial
-    private double monto=0; //Hasta que no pague, esto permanecera en 0, cuando quiera ver el historial aparecera cuanto salio
+    private LocalDateTime checkOut;
+    private double monto=0;
     private String opinion;
 
     //--------------- Constructor ---------------
@@ -117,8 +117,6 @@ public class Reserva {
         }
 
     }
-
-
 
     @Override
     public String toString() {
