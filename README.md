@@ -1,6 +1,6 @@
-#### TPFinal : Sistema de Administración de un Hotel
+##### TPFinal : Sistema de Administración de un Hotel
 
-### Consigna
+#### Consigna
 
 **Sistema de administración de un hotel.**
 
