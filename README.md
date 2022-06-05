@@ -1,6 +1,6 @@
-##### TPFinal : Sistema de Administración de un Hotel
+# TPFinal : Sistema de Administración de un Hotel
 
-#### Consigna
+### Consigna
 
 **Sistema de administración de un hotel.**
 
@@ -35,7 +35,7 @@ el check-in, y termina cuando el pasajero abandona la misma en el check-out.
 ocupada por un pasajero. Una habitación reservada no puede ser ocupada, salvo por el
 pasajero que la reservó, a no ser que se cancele la reserva.
 
-## Tipos de usuario del sistema :
+#### Tipos de usuario del sistema :
 Se prevén por lo menos 3 tipos de usuario
 
 ● **Administrador:** Es el encargado de las funciones administrativas del sistema. Dentro de
