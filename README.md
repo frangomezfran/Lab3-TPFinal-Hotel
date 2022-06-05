@@ -1,5 +1,6 @@
-**JAVA - Laboratorio 3 - Trabajo Práctico Final - Sistema de Administracion de un Hotel**
-#### Consigna
+# JAVA - Laboratorio 3 - Trabajo Práctico Final - Sistema de Administracion de un Hotel
+
+### Consigna
 
 **Sistema de administración de un hotel.**
 
