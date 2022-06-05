@@ -10,7 +10,7 @@ y check-out de los pasajeros, listar las habitaciones actualmente ocupadas y los
 los ocupantes, las habitaciones disponibles, y las habitaciones que no estén disponibles por
 algún motivo (limpieza, reparación, desinfección, etc. Detallar el motivo).
 
-      Deberá informar si es posible ocupar una habitación en un período determinado (consultando la
+    Deberá informar si es posible ocupar una habitación en un período determinado (consultando la
 ocupación y las reservas). Para los pasajeros se pide un informe que incluya nombre, DNI,
 origen, domicilio de origen. Opcionalmente se puede dar información sobre la historia del
 pasajero en el hotel (detalles de los períodos en los que estuvo alojado, la habitación que
